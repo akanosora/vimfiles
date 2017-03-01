@@ -50,6 +50,7 @@ endfunction
 
 " Feed keys to trigger popup menu
 function acp#FeedKeys()
+  call s:LogDebugInfo('Call acp#FeedKeys()')
   if empty('s:behavs')
     return ''
   endif
@@ -100,12 +101,14 @@ endfunction
 " Log debugging information
 function s:LogDebugInfo(text)
   if g:acp_log_debug_info == 1
-    echom 'AutoComplPop: [' . s:GetCurrentText() . '] ' . a:text
+    echom strftime('%H:%M:%S') . ': ACP [' . s:GetCurrentText() . '] ' . a:text
   endif
 endfunction
 
 " Set a temperary value to a variable
 function s:SetTempOption(group, name, value)
+  call s:LogDebugInfo('Call s:SetTempOption(' .
+        \ a:group . ', ' . a:name . ', ' . a:value . ')')
   if !exists('s:orig_options')
     let s:orig_options = {}
   endif
@@ -120,6 +123,7 @@ endfunction
 
 " Restore original values to a variable group
 function s:RestoreTempOptions(group)
+  call s:LogDebugInfo('Call s:RestoreTempOptions(' . a:group . ')')
   if !exists('s:orig_options')
     return
   endif
@@ -135,6 +139,7 @@ endfunction
 
 " Restore multiple variable groups
 function s:RestoreOptionGroupsUpto(level)
+  call s:LogDebugInfo('Call s:RestoreOptionGroupsUpto(' . a:level . ')')
   for group in range(0, a:level)
     call s:RestoreTempOptions(group)
   endfor
@@ -169,6 +174,7 @@ endfunction
 " Make a new behavior set s:behavs
 " Return 1 if a new behavior set is created, 0 if otherwise
 function s:MakeCurrentBehaviorSet()
+  call s:LogDebugInfo('Call s:MakeCurrentBehaviorSet()')
   if s:IsCursorMoved()
     let s:behavs = copy(exists('g:acp_behavior[&filetype]') ?
           \ g:acp_behavior[&filetype] : g:acp_behavior['*'])
@@ -188,16 +194,18 @@ function s:MakeCurrentBehaviorSet()
     endif
   endif
   if empty(s:behavs)
+    call s:LogDebugInfo('Empty behavior set.')
     return 0
   endif
-  call s:LogDebugInfo("Make behavior set: [" .
-        \ join(map(copy(s:behavs), 'v:val.command')) . "].")
+  call s:LogDebugInfo('Make behavior set: [' .
+        \ join(map(copy(s:behavs), 'v:val.command')) . '].')
   let s:behav_idx = -1
   return 1
 endfunction
 
 " Clear current behavior set s:behavs
 function s:ClearBehaviorSet()
+  call s:LogDebugInfo('Call s:ClearBehaviorSet()')
   let s:behavs = []
 endfunction
 
@@ -217,6 +225,7 @@ endfunction
 " Initialize popup menu
 " Make behavior set and set options
 function s:InitPopup()
+  call s:LogDebugInfo('Call s:InitPopup()')
   if (exists('b:lock_count') && b:lock_count > 0) || &paste
     return
   endif
@@ -244,6 +253,7 @@ endfunction
 
 " Complete done
 function s:CompleteDone()
+  call s:LogDebugInfo('Call s:CompleteDone()')
   " This function is called in two scenarios
   " If completion was successful, it is executed
   " before the next InsertCharPre event; if completion
