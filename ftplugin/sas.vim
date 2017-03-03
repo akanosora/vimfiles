@@ -10,8 +10,7 @@ set cpo&vim
 " Local settings
 setlocal softtabstop=2 shiftwidth=2 expandtab conceallevel=3
 setlocal hidden omnifunc=sascomplete#Complete
-setlocal cms=/*%s*/ foldmethod=syntax
-setlocal makeprg=sas\ -noverbose\ -sysin\ '%:p'
+setlocal cms=/*%s*/ makeprg=sas\ -noverbose\ -sysin\ '%:p'
 
 " Find autoexec files from $PATH
 for syspath in split(expand('$PATH'), has('win32') ? ';' : ':')
