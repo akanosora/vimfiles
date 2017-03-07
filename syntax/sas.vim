@@ -44,9 +44,9 @@
 " - Many other improvements and bug fixes
 " Drop support for earlier versions of VIM
 "
-" 2012 Feb 27 
+" 2012 Feb 27
 "
-" Rewrite the entire matching algorithm 
+" Rewrite the entire matching algorithm
 " Add keywords in Base SAS 9.3 and SAS/Stat
 " Fix issues in highlighting procedure names and internal variables
 " Add highlighting for hash and hiter objects
@@ -103,7 +103,7 @@ syn region sasString start=+'+ end=+'+ contains=@Spell
 syn region sasString start=+"+ end=+"+ contains=sasMacroVariable,@Spell
 
 " Format tag
-syn match sasFormatTag '\v<\$=\K\k*\.\d*\ze%(\s|$)' display contained
+syn match sasFormatTag '\v<\$=\K\k*\.\d*\ze%(\H|$)' display contained
 
 " Comments
 syn region sasComment start='/\*' end='\*/'
@@ -115,7 +115,7 @@ syn keyword sasFunctionName abs addr addrlong airy allcomb allperm anyalnum anya
 syn keyword sasFunctionName n netpv nliteral nmiss nomrate normal notalnum notalpha notcntrl notdigit note notfirst notgraph notlower notname notprint notpunct notspace notupper notxdigit npv nvalid nwkdom open ordinal pathname pctl pdf peek peekc peekclong peeklong perm pmt point poisson ppmt probbeta probbnml probbnrm probchi probf probgam probhypr probit probmc probnegb probnorm probt propcase prxchange prxmatch prxparen prxparse prxposn ptrlongadd put putc putn pvp qtr quantile quote ranbin rancau rand ranexp rangam range rank rannor ranpoi rantbl rantri ranuni rename repeat resolve reverse rewind right rms round rounde roundz saving savings scan sdf sec second sha256 sha256hex sha256hmachex sign sin sinh skewness sleep smallest soapweb soapwebmeta soapwipservice soapwipsrs soapws soapwsmeta soundex spedis sqrt squantile std stderr stfips stname stnamel strip subpad substr substrn sum sumabs symexist symget symglobl symlocal sysexist sysget sysmsg sysparm sysprocessid sysprocessname sysprod sysrc system tan tanh time timepart timevalue tinv tnonct today translate transtrn tranwrd trigamma trim trimn trunc tso typeof tzoneid tzonename tzoneoff tzones2u tzoneu2s uniform upcase urldecode urlencode uss uuidgen var varfmt varinfmt varlabel varlen varname varnum varray varrayx vartype verify vformat vformatd vformatdx vformatn vformatnx vformatw vformatwx vformatx vinarray vinarrayx vinformat vinformatd vinformatdx vinformatn vinformatnx vinformatw vinformatwx vinformatx vlabel vlabelx vlength vlengthx vname vnamex vtype vtypex vvalue vvaluex week weekday whichc whichn wto year yieldp yrdif yyq zipcity zipcitydistance zipfips zipname zipnamel zipstate contained
 syn match sasFunctionHead '\v<\w+\(' display transparent contained contains=sasFunctionName
 syn region sasFunction start='\v<\w+\(' end=')' contains=@sasBasicSyntax,sasFunctionHead
-syn keyword sasCallRoutineName call allcomb allcombi allperm cats catt catx compcost execute graycode is8601_convert label lexcomb lexcombi lexperk lexperm logistic missing module poke pokelong prxchange prxdebug prxfree prxnext prxposn prxsubstr ranbin rancau rancomb ranexp rangam rannor ranperk ranperm ranpoi rantbl rantri ranuni scan set sleep softmax sortc sortn stdize streaminit symput symputx system tanh tso vname vnext wto
+syn keyword sasCallRoutineName call allcomb allcombi allperm cats catt catx compcost execute graycode is8601_convert label lexcomb lexcombi lexperk lexperm logistic missing module poke pokelong prxchange prxdebug prxfree prxnext prxposn prxsubstr ranbin rancau rancomb ranexp rangam rannor ranperk ranperm ranpoi rantbl rantri ranuni scan set sleep softmax sortc sortn stdize streaminit symput symputx system tanh tso vname vnext wto contained
 syn match sasCallRoutineHead '\v<call\s+\w+\(' display transparent contained contains=sasCallRoutineName
 syn region sasCallRoutine start='\v<call\s+\w+\(' end=')' contains=@sasBasicSyntax,sasCallRoutineHead
 syn region sasMacroFunc matchgroup=sasMacroFuncName start='\v\%\w+\ze\(' end=')'me=s-1 contains=@sasBasicSyntax
@@ -128,39 +128,39 @@ syn match sasMacroReserved '\v\%%(abort|by|copy|display|do|else|end|global|goto|
 syn cluster sasBasicSyntax contains=sasOperator,sasReserved,sasNumber,sasString,sasFormatTag,sasComment,sasFunction,sasCallRoutine,sasMacroReserved,sasMacroFunc,sasMacroVariable,sasSectLbl
 
 " Define global statements that can be accessed out of data step or procedures
-syn keyword sasGlobalStatementKeyword catname dm endsas filename footnote footnote1 footnote2 footnote3 footnote4 footnote5 footnote6 footnote7 footnote8 footnote9 footnote10 missing libname lock options page quit resetline run sasfile skip sysecho title title1 title2 title3 title4 title5 title6 title7 title8 title9 title10
+syn keyword sasGlobalStatementKeyword catname dm endsas filename footnote footnote1 footnote2 footnote3 footnote4 footnote5 footnote6 footnote7 footnote8 footnote9 footnote10 missing libname lock options page quit resetline run sasfile skip sysecho title title1 title2 title3 title4 title5 title6 title7 title8 title9 title10 contained
 syn match sasGlobalStatement '\v%(^|;)\s*\zs\w+>' display transparent contains=sasGlobalStatementKeyword
 " Define ODS statements that can be accessed out of data steps or procedures
-syn keyword sasODSStatementKeyword ods chtml csvall docbook document escapechar exclude graphics html3 html htmlcss imode listing markup output package path pcl pdf preferences phtml printer proclabel proctitle ps results rtf select show tagsets trace usegopt verify wml
+syn keyword sasODSStatementKeyword ods chtml csvall docbook document escapechar exclude graphics html3 html htmlcss imode listing markup output package path pcl pdf preferences phtml printer proclabel proctitle ps results rtf select show tagsets trace usegopt verify wml contained
 syn match sasODSStatment '\v%(^|;)\s*\zsods%(\s+\w+)=>' display transparent contains=sasODSStatementKeyword
 
 " Data step statements, 9.4
 syn keyword sasDataStepControl by continue do else end go goto if leave link otherwise over return select then to until when while contained
-syn keyword sasDataStepStatementKeyword abort array attrib by call cards cards4 data datalines datalines4 delete describe display drop error execute file format infile informat input keep label length lines lines4 list lostcard merge modify output put putlog redirect remove rename replace retain set stop update where window contained
+syn keyword sasDataStepStatementKeyword abort array attrib by cards cards4 datalines datalines4 delete describe display drop error execute file format infile informat input keep label length lines lines4 list lostcard merge modify output put putlog redirect remove rename replace retain set stop update where window contained
 syn match sasDataStepStatement '\v%(^|;)\s*\zs\w+>' display transparent contained contains=sasDataStepStatementKeyword,sasGlobalStatementKeyword
 syn keyword sasDataStepStatementHashKeyword dcl declare hash hiter javaobj contained
 syn match sasDataStepStatement '\v%(^|;)\s*\zs%(dcl|declare)%(\s+\w+)=>' display transparent contained contains=sasDataStepStatementHashKeyword
-syn region sasDataStep start='\v%(^|;)\s*\zsdata>' end='\v%(^|;)\s*%(data|endsas|proc|run)>'me=s-1 fold contains=@sasBasicSyntax,sasDataStepControl,sasDataStepStatement
+syn region sasDataStep matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsdata>' end='\v%(^|;)\s*%(data|endsas|proc|run)>'me=s-1 fold contains=@sasBasicSyntax,sasDataStepControl,sasDataStepStatement
 
 " Procedures, base SAS, 9.4
 syn keyword sasProcStatementKeyword abort age append array attrib audit block break by calid cdfplot change checkbox class classlev column compute contents copy create datarow dbencoding define delete deletefunc deletesubr delimiter device dialog dur endcomp exact exchange exclude explore fin fmtlib fontfile fontpath format formats freq function getnames guessingrows hbar hdfs histogram holidur holifin holistart holivar id idlabel informat inset invalue item key keylabel keyword label line link listfunc listsubr mapmiss mapreduce mean menu messages meta modify opentype outargs outdur outfin output outstart pageby partial picture pie pig plot ppplot printer probplot profile prompter qqplot radiobox ranks rbreak rbutton rebuild record remove rename repair report roptions save select selection separator source star start statistics struct submenu subroutine sum sumby table tables test text trantab truetype type1 types value var vbar ways weight where with write contained
 syn match sasProcStatement '\v%(^|;)\s*\zs\w+>' display transparent contained contains=sasProcStatementKeyword,sasGlobalStatementKeyword
-syn region sasProc matchgroup=sasProcKeyword start='\v%(^|;)\s*\zsproc%(\s+\w+)>' end='\v%(^|;)\s*%(data|endsas|proc|quit|run)>'me=s-1 fold contains=@sasBasicSyntax,sasProcStatement
+syn region sasProc matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc%(\s+\w+)>' end='\v%(^|;)\s*%(data|endsas|proc|quit|run)>'me=s-1 fold contains=@sasBasicSyntax,sasProcStatement
 
 " Procedures, ODS graphics, 9.4
 syn keyword sasODSGraphicsProcStatementKeyword band block bubble colaxis compare dattrvar density dot dropline dynamic ellipse ellipseparm fringe gradlegend hbar hbarbasic hbarparm hbox heatmap heatmapparm highlow histogram hline inset keylegend lineparm loess matrix needle parent panelby pbspline plot polygon refline reg rowaxis scatter series spline step style styleattrs symbolchar symbolimage text vbar vbarbasic vbarparm vbox vector vline waterfall xaxis x2axis yaxis y2axis yaxistable contained
 syn match sasODSGraphicsProcStatement '\v%(^|;)\s*\zs\w+>' display transparent contained contains=sasODSGraphicsProcStatementKeyword,sasGlobalStatementKeyword
-syn region sasODSGraphicsProc matchgroup=sasProcKeyword start='\v%(^|;)\s*\zsproc\s+%(sgdesign|sgpanel|sgplot|sgrender|sgscatter)>' end='\v%(^|;)\s*%(data|endsas|proc|quit|run)>'me=s-1 fold contains=@sasBasicSyntax,sasODSGraphicsProcStatement
+syn region sasODSGraphicsProc matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc\s+%(sgdesign|sgpanel|sgplot|sgrender|sgscatter)>' end='\v%(^|;)\s*%(data|endsas|proc|quit|run)>'me=s-1 fold contains=@sasBasicSyntax,sasODSGraphicsProcStatement
 
 " Procedures, SAS/GRAPH, 9.4
 syn keyword sasGraphProcStatementKeyword add area axis bar block bubble2 byline cc ccopy cdef cdelete chart cmap choro copy delete device dial donut exclude flow fs goptions gout grid group hbar hbar3d hbullet hslider htrafficlight id igout legend list modify move nobyline note pattern pie pie3d plot plot2 preview prism quit rename replay select scatter speedometer star surface symbol tc tcopy tdef tdelete template tile toggle treplay vbar vbar3d vtrafficlight vbullet vslider contained
 syn match sasGraphProcStatement '\v%(^|;)\s*\zs\w+>' display transparent contained contains=sasGraphProcStatementKeyword,sasGlobalStatementKeyword
-syn region sasGraphProc matchgroup=sasProcKeyword start='\v%(^|;)\s*\zsproc\s+%(g3d|g3grid|ganno|gareabar|gbarline|gchart|gcontour|gdevice|geocode|gfont|ginside|gkpi|gmap|goptions|gplot|gproject|gradar|greduce|gremove|greplay|gslide|gtile|mapimport)>' end='\v%(^|;)\s*%(data|endsas|proc|run)>'me=s-1 fold contains=@sasBasicSyntax,sasGraphProcStatement
+syn region sasGraphProc matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc\s+%(g3d|g3grid|ganno|gareabar|gbarline|gchart|gcontour|gdevice|geocode|gfont|ginside|gkpi|gmap|goptions|gplot|gproject|gradar|greduce|gremove|greplay|gslide|gtile|mapimport)>' end='\v%(^|;)\s*%(data|endsas|proc|run)>'me=s-1 fold contains=@sasBasicSyntax,sasGraphProcStatement
 
 " Procedures, SAS/STAT, 14.1
 syn keyword sasAnalyticalProcStatementKeyword absorb add array assess baseline bayes beginnodata bivar bootstrap bounds by cdfplot cells class cluster code compute condition contrast control coordinates copy cosan cov covtest coxreg der design determ deviance direct directions domain effect effectplot effpart em endnodata equality estimate exact exactoptions factor factors fcs filter fitindex freq fwdlink gender grid group grow hazardratio height hyperprior id impjoint inset insetgroup invar invlink ippplot lincon lineqs lismod lmtests location logistic loglin lpredplot lsmeans lsmestimate manova matings matrix mcmc mean means missmodel mnar model modelaverage modeleffects monotone mstruct mtest multreg name nlincon nloptions oddsratio onecorr onesamplefreq onesamplemeans onewayanova outfiles output paired pairedfreq pairedmeans parameters parent parms partial partition path pathdiagram pcov performance plot population poststrata power preddist predict predpplot priors process probmodel profile prune pvar ram random ratio reference refit refmodel renameparm repeated replicate repweights response restore restrict retain reweight ridge rmsstd roc roccontrast rules samplesize samplingunit seed size scale score selection show simtests simulate slice std stderr store strata structeq supplementary table tables test testclass testfreq testfunc testid time transform treatments trend twosamplefreq twosamplemeans towsamplesurvival twosamplewilcoxon uds units univar var variance varnames weight where with zeromodel contained
 syn match sasAnalyticalProcStatement '\v%(^|;)\s*\zs\w+>' display transparent contained contains=sasAnalyticalProcStatementKeyword,sasGlobalStatementKeyword
-syn region sasAnalyticalProc matchgroup=sasProcKeyword start='\v%(^|;)\s*\zsproc\s+%(aceclus|adaptivereg|anova|bchoice|boxplot|calis|cancorr|candisc|catmod|cluster|corresp|discrim|distance|factor|fastclus|fmm|freq|gam|gampl|gee|genmod|glimmix|glm|glmmod|glmpower|glmselect|hpcandisc|hpfmm|hpgenselect|hplmixed|hplogistic|hpmixed|hpnlmod|hppls|hpprincomp|hpquantselect|hpreg|hpsplit|iclifetest|icphreg|inbreed|irt|kde|krige2d|lattice|lifereg|lifetest|loess|logistic|mcmc|mds|mi|mianalyze|mixed|modeclus|multtest|nested|nlin|nlmixed|npar1way|orthoreg|phreg|plan|plm|pls|power|princomp|prinqual|probit|quantlife|quantreg|quantselect|reg|robustreg|rsreg|score|seqdesign|seqtest|sim2d|simnormal|spp|stdize|stdrate|stepdisc|surveyfreq|surveyimpute|surveylogistic|surveymeans|surveyphreg|surveyreg|surveyselect|tpspline|transreg|tree|ttest|varclus|varcomp|variogram)>' end='\v%(^|;)\s*%(data|endsas|proc|run)>'me=s-1 fold contains=@sasBasicSyntax,sasAnalyticalProcStatement
+syn region sasAnalyticalProc matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc\s+%(aceclus|adaptivereg|anova|bchoice|boxplot|calis|cancorr|candisc|catmod|cluster|corresp|discrim|distance|factor|fastclus|fmm|freq|gam|gampl|gee|genmod|glimmix|glm|glmmod|glmpower|glmselect|hpcandisc|hpfmm|hpgenselect|hplmixed|hplogistic|hpmixed|hpnlmod|hppls|hpprincomp|hpquantselect|hpreg|hpsplit|iclifetest|icphreg|inbreed|irt|kde|krige2d|lattice|lifereg|lifetest|loess|logistic|mcmc|mds|mi|mianalyze|mixed|modeclus|multtest|nested|nlin|nlmixed|npar1way|orthoreg|phreg|plan|plm|pls|power|princomp|prinqual|probit|quantlife|quantreg|quantselect|reg|robustreg|rsreg|score|seqdesign|seqtest|sim2d|simnormal|spp|stdize|stdrate|stepdisc|surveyfreq|surveyimpute|surveylogistic|surveymeans|surveyphreg|surveyreg|surveyselect|tpspline|transreg|tree|ttest|varclus|varcomp|variogram)>' end='\v%(^|;)\s*%(data|endsas|proc|run)>'me=s-1 fold contains=@sasBasicSyntax,sasAnalyticalProcStatement
 
 " Proc TEMPLATE, 9.4
 syn keyword sasProcTemplateClause as into
@@ -171,7 +171,7 @@ syn keyword sasProcTemplateStatementComplexKeyword define cellvalue column cross
 syn match sasProcTemplateStatement '\v%(^|;)\s*\zsdefine%(\s+\w+)=>' display transparent contained contains=sasProcTemplateStatementComplexKeyword
 syn keyword sasProcTemplateGTLStatementComplexKeyword layout datalattice datapanel globallegend gridded lattice overlay overlayequated overlay3d region contained
 syn match sasProcTemplateStatement '\v%(^|;)\s*\zslayout%(\s+\w+)=>' display transparent contained contains=sasProcTemplateGTLStatementComplexKeyword
-syn region sasProcTemplate matchgroup=sasProcKeyword start='\v%(^|;)\s*\zsproc\s+template>' end='\v%(^|;)\s*%(data|endsas|proc|quit|run)>'me=s-1 fold contains=@sasBasicSyntax,sasProcTemplateClause,sasProcTemplateStatement
+syn region sasProcTemplate matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc\s+template>' end='\v%(^|;)\s*%(data|endsas|proc|quit|run)>'me=s-1 fold contains=@sasBasicSyntax,sasProcTemplateClause,sasProcTemplateStatement
 
 " Proc SQL, 9.4
 syn keyword sasProcSQLClause add as asc between by calculated cascade case check connection constraint cross delete desc distinct drop else end escape except exists foreign from full group having in inner intersect into is join key left libname like modify natural newline notrim null on order outer references restrict right select separated set then to trimmed union unique update user using values when where contained
@@ -179,7 +179,7 @@ syn keyword sasProcSQLStatementKeyword connect delete disconnect execute insert 
 syn match sasProcSQLStatement '\v%(^|;)\s*\zs\w+>' display transparent contained contains=sasProcSQLStatementKeyword,sasGlobalStatementKeyword
 syn keyword sasProcSQLStatementComplexKeyword alter create describe drop index table view contained
 syn match sasProcSQLStatement '\v%(^|;)\s*\zs%(alter|create|describe|drop)%(\s+\w+)=>' display transparent contained contains=sasProcSQLStatementComplexKeyword
-syn region sasProcSQL matchgroup=sasProcKeyword start='\v%(^|;)\s*\zsproc\s+sql>' end='\v%(^|;)\s*%(data|endsas|proc|quit|run)>'me=s-1 fold contains=@sasBasicSyntax,sasProcSQLClause,sasProcSQLStatement
+syn region sasProcSQL matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc\s+sql>' end='\v%(^|;)\s*%(data|endsas|proc|quit|run)>'me=s-1 fold contains=@sasBasicSyntax,sasProcSQLClause,sasProcSQLStatement
 
 " SAS/DS2, 9.4
 syn keyword sasDS2Control by continue data do else end enddata endpackage endthread from go goto if leave method otherwise package point return select then thread to until when while contained
@@ -187,16 +187,16 @@ syn keyword sasDS2StatementKeyword array by forward keep merge output put rename
 syn match sasDS2Statement '\v%(^|;)\s*\zs\w+>' display transparent contained contains=sasDS2StatementKeyword,sasGlobalStatementKeyword
 syn keyword sasDS2StatementComplexKeyword dcl declare drop package thread
 syn match sasDS2Statement '\v%(^|;)\s*\zs%(dcl|declare|drop)%(\s+\w+)=>' display transparent contained contains=sasDS2StatementComplexKeyword
-syn region sasDS2 matchgroup=sasProcKeyword start='\v%(^|;)\s*\zsproc\s+ds2>' end='\v%(^|;)\s*%(data|endsas|proc|quit|run)>'me=s-1 fold contains=@sasBasicSyntax,sasDS2Control,sasDS2Statement
+syn region sasDS2 matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc\s+ds2>' end='\v%(^|;)\s*%(data|endsas|proc|quit|run)>'me=s-1 fold contains=@sasBasicSyntax,sasDS2Control,sasDS2Statement
 
 " SAS/IML, 14.1
 syn keyword sasIMLControl abort by do else end finish goto if link pause quit resume return run start stop then to until while contained
 syn keyword sasIMLStatementKeyword append close create delete edit find free list load mattrib print purge read reset remove setin setout show sort store use contained
 syn match sasIMLStatement '\v%(^|;)\s*\zs\w+>' display transparent contained contains=sasIMLStatementKeyword,sasGlobalStatementKeyword
-syn region sasIML matchgroup=sasProcKeyword start='\v%(^|;)\s*\zsproc\s+iml>' end='\v%(^|;)\s*%(data|endsas|proc|quit)>'me=s-1 fold contains=@sasBasicSyntax,sasIMLControl,sasIMLStatement
+syn region sasIML matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc\s+iml>' end='\v%(^|;)\s*%(data|endsas|proc|quit)>'me=s-1 fold contains=@sasBasicSyntax,sasIMLControl,sasIMLStatement
 
 " Macro definition
-syn region sasMacro start='\v\%macro>' end='\v\%mend>' fold contains=@sasBasicSyntax,sasGlobalStatement,sasDataStepControl,sasDataStepStatement,sasDataStep,sasProc,sasODSGraphicsProc,sasGraphProc,sasAnalyticalProc,sasProcTemplate,sasProcSQL,sasDS2,sasIML
+syn region sasMacro start='\v\%macro>' end='\v\%mend>' fold keepend contains=@sasBasicSyntax,sasGlobalStatement,sasODSStatment,sasDataStepControl,sasDataStepStatement,sasDataStep,sasProc,sasODSGraphicsProc,sasGraphProc,sasAnalyticalProc,sasProcTemplate,sasProcSQL,sasDS2,sasIML
 
 " Define default highlighting
 hi def link sasComment Comment
@@ -214,9 +214,9 @@ hi def link sasFunctionName Function
 hi def link sasCallRoutineName Function
 hi def link sasGlobalStatementKeyword Statement
 hi def link sasODSStatementKeyword Statement
+hi def link sasSectionKeyword Statement
 hi def link sasDataStepStatementKeyword Statement
 hi def link sasDataStepStatementHashKeyword Statement
-hi def link sasProcKeyword Statement
 hi def link sasProcStatementKeyword Statement
 hi def link sasODSGraphicsProcStatementKeyword Statement
 hi def link sasGraphProcStatementKeyword Statement
