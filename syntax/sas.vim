@@ -130,7 +130,7 @@ syn cluster sasBasicSyntax contains=sasOperator,sasReserved,sasNumber,sasString,
 
 " Define global statements that can be accessed out of data step or procedures
 syn keyword sasGlobalStatementKeyword catname dm endsas filename footnote footnote1 footnote2 footnote3 footnote4 footnote5 footnote6 footnote7 footnote8 footnote9 footnote10 missing libname lock ods options page quit resetline run sasfile skip sysecho title title1 title2 title3 title4 title5 title6 title7 title8 title9 title10 contained
-syn keyword sasGlobalStatementODSKeyword chtml csvall docbook document escapechar exclude graphics html3 html htmlcss imode listing markup output package path pcl pdf preferences phtml printer proclabel proctitle ps results rtf select show tagsets trace usegopt verify wml contained
+syn keyword sasGlobalStatementODSKeyword chtml csvall docbook document escapechar epub epub2 epub3 exclude excel graphics html html3 html5 htmlcss imode listing markup output package path pcl pdf preferences phtml powerpoint printer proclabel proctitle ps results rtf select show tagsets trace usegopt verify wml contained
 syn match sasGlobalStatement '\v%(^|;)\s*\zs\w+>' display transparent contains=sasGlobalStatementKeyword
 syn match sasGlobalStatement '\v%(^|;)\s*\zsods>' display transparent contains=sasGlobalStatementKeyword nextgroup=sasGlobalStatementODSKeyword skipwhite skipnl skipempty
 
