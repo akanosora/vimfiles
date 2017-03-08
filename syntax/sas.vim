@@ -108,8 +108,9 @@ syn region sasString start=+"+ end=+"+ contains=sasMacroVariable,@Spell
 syn match sasFormatTag '\v<\$=\h\w*\.\d*\ze%(\s|;|$)' display contained
 
 " Comments
-syn region sasComment start='/\*' end='\*/'
-syn region sasComment start='\v%(^|;)\s*\zs\%=\*' end=';'me=s-1
+syn keyword sasTodo todo tbd fixme contained
+syn region sasComment start='/\*' end='\*/' contains=sasTodo
+syn region sasComment start='\v%(^|;)\s*\zs\%=\*' end=';'me=s-1 contains=sasTodo
 syn region sasSectLbl matchgroup=sasSectLblEnds start='/\*\*\s*' end='\s*\*\*/' concealends
 
 " Functions
@@ -212,6 +213,7 @@ syn region sasMacro start='\v\%macro>' end='\v\%mend>' fold keepend contains=@sa
 
 " Define default highlighting
 hi def link sasComment Comment
+hi def link sasTodo Delimiter
 hi def link sasSectLbl Title
 hi def link sasSectLblEnds Comment
 hi def link sasDataStepControl Keyword
