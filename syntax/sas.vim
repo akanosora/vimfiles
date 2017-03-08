@@ -97,7 +97,9 @@ syn keyword sasOperator and eq ge gt in le lt ne not of or
 syn keyword sasReserved _all_ _automatic_ _char_ _character_ _data_ _infile_ _last_ _n_ _name_ _null_ _num_ _numeric_ _temporary_ _user_ _webout_
 
 " Numbers
-syn match sasNumber '\v<\-=%(\d+\.=\d*|\.\d+)%(e\-=\d+)=>' display
+syn match sasNumber '\v<\-=\d+' display nextgroup=sasNumberFractional,sasNumberScientific
+syn match sasNumberFractional '\v\.\d+' display contained nextgroup=sasNumberScientific
+syn match sasNumberScientific '\ve\-=\d+' display contained
 
 " Strings
 syn region sasString start=+'+ end=+'+ contains=@Spell
@@ -218,6 +220,8 @@ hi def link sasDS2Control Keyword
 hi def link sasIMLControl Keyword
 hi def link sasOperator Operator
 hi def link sasNumber Number
+hi def link sasNumberFractional Number
+hi def link sasNumberScientific Number
 hi def link sasString String
 hi def link sasFunctionName Function
 hi def link sasCallRoutineName Function
