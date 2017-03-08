@@ -2611,7 +2611,7 @@ function! s:MenuGetTagTypeCmd(fname, ftype, flag)
   " If the tag type name contains space characters, escape it. This
   " will be used to create the menu entries.
   let flag_fullname = s:tlist_filetype_settings[a:ftype].flags[a:flag]
-  let flag_fullname = escape(substitute(flag_fullname, '&', '&&', 'g'), ' .\')
+  let flag_fullname = escape(substitute(flag_fullname, '&', '&&', 'g'), ' .\|')
   " Number of tags under this flag
   let tcnt = len(s:tlist_file_cache[a:fname].flags[a:flag].tags)
   let mcmd = ''
@@ -2632,8 +2632,8 @@ function! s:MenuGetTagTypeCmd(fname, ftype, flag)
       let fst_tag = strpart(fst_tag, 0, g:tlist_max_tag_length)
       let lst_tag = strpart(lst_tag, 0, g:tlist_max_tag_length)
       " Escape illegal characters
-      let fst_tag = escape(substitute(fst_tag, '&', '&&', 'g'), ' .\')
-      let lst_tag = escape(substitute(lst_tag, '&', '&&', 'g'), ' .\')
+      let fst_tag = escape(substitute(fst_tag, '&', '&&', 'g'), ' .\|')
+      let lst_tag = escape(substitute(lst_tag, '&', '&&', 'g'), ' .\|')
       " Form the menu command prefix
       let m_prefix = 'anoremenu <silent> T\&ags.' . flag_fullname .
             \ '.' . fst_tag . '\ \.\.\.\ ' . lst_tag . '.'
@@ -2641,7 +2641,7 @@ function! s:MenuGetTagTypeCmd(fname, ftype, flag)
       let m_prefix_idx = 0
       while tidx <= f_tidx
         let tname = s:tlist_file_cache[a:fname].flags[a:flag].tags[tidx].tag_name
-        let tname = escape(substitute(tname, '&', '&&', 'g'), ' .\')
+        let tname = escape(substitute(tname, '&', '&&', 'g'), ' .\|')
         let mcmd = mcmd . m_prefix . '\&' .
               \ s:tlist_menu_prefix_chars[m_prefix_idx] . '\.\ ' .
               \ tname . ' :call <SID>MenuJumpToTag(' .
@@ -2657,7 +2657,7 @@ function! s:MenuGetTagTypeCmd(fname, ftype, flag)
     let tidx = 0
     while tidx < tcnt
       let tname = s:tlist_file_cache[a:fname].flags[a:flag].tags[tidx].tag_name
-      let tname = escape(substitute(tname, '&', '&&', 'g'), ' .\')
+      let tname = escape(substitute(tname, '&', '&&', 'g'), ' .\|')
       let mcmd = mcmd . m_prefix . '\&' .
             \ s:tlist_menu_prefix_chars[m_prefix_idx] . '\.\ ' .
             \ tname . ' :call <SID>MenuJumpToTag(' .
