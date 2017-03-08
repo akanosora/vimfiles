@@ -9,6 +9,7 @@
 " Largely improve speed
 " Improve SQL syntax accuracy
 " Add new keywords in the latest SAS (as of Mar 2017)
+" Add syntax for data lines
 "
 " 2017 Feb 9
 "
@@ -133,13 +134,15 @@ syn match sasGlobalStatement '\v%(^|;)\s*\zs\h\w*>' display transparent contains
 syn match sasGlobalStatement '\v%(^|;)\s*\zsods>' display transparent contains=sasGlobalStatementKeyword nextgroup=sasGlobalStatementODSKeyword skipwhite skipnl skipempty
 
 " Data step statements, 9.4
-syn keyword sasDataStepControl by continue do end go goto if leave link otherwise over return select to until when while contained
+syn keyword sasDataStepControl continue do end go goto if leave link otherwise over return select to until when while contained
 syn keyword sasDataStepControl else then contained nextgroup=sasDataStepStatementKeyword skipwhite skipnl skipempty
 syn keyword sasDataStepStatementKeyword abort array attrib by call cards cards4 datalines datalines4 dcl declare delete describe display drop error execute file format infile informat input keep label length lines lines4 list lostcard merge modify output put putlog redirect remove rename replace retain set stop update where window contained
 syn keyword sasDataStepStatementHashKeyword hash hiter javaobj contained
 syn match sasDataStepStatement '\v%(^|;)\s*\zs\h\w*>' display contained contains=sasDataStepStatementKeyword,sasGlobalStatementKeyword
 syn match sasDataStepStatement '\v%(^|;)\s*\zs%(dcl|declare)>' display contained contains=sasDataStepStatementKeyword nextgroup=sasDataStepStatementHashKeyword skipwhite skipnl skipempty
 syn match sasDataStepStatement '\v%(^|;)\s*\zsods>' display contained contains=sasGlobalStatementKeyword nextgroup=sasGlobalStatementODSKeyword skipwhite skipnl skipempty
+syn match sasDataStepStatement '\v%(^|;)\s*\zs%(cards|datalines|lines)4=\s*;' display contained contains=sasDataStepStatementKeyword nextgroup=sasDataLine skipwhite skipnl skipempty
+syn region sasDataLine start='^' end='^;'me=s-1 contained
 syn region sasDataStep matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsdata>' end='\v%(^|;)\s*%(data|endsas|proc|run)>'me=s-1 fold contains=@sasBasicSyntax,sasDataStepControl,sasDataStepStatement
 
 " Procedures, base SAS, 9.4
@@ -189,7 +192,7 @@ syn match sasProcSQLStatement '\v%(^|;)\s*\zsvalidate>' display contained contai
 syn region sasProcSQL matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc\s+sql>' end='\v%(^|;)\s*%(data|endsas|proc|quit|run)>'me=s-1 fold contains=@sasBasicSyntax,sasProcSQLClause,sasProcSQLStatement
 
 " SAS/DS2, 9.4
-syn keyword sasDS2Control by continue data dcl declare do drop else end enddata endpackage endthread from go goto if leave method otherwise package point return select then thread to until when while contained
+syn keyword sasDS2Control continue data dcl declare do drop else end enddata endpackage endthread from go goto if leave method otherwise package point return select then thread to until when while contained
 syn keyword sasDS2StatementKeyword array by forward keep merge output put rename retain set stop vararray varlist contained
 syn keyword sasDS2StatementComplexKeyword package thread contained
 syn match sasDS2Statement '\v%(^|;)\s*\zs\h\w*>' display contained contains=sasDS2StatementKeyword,sasGlobalStatementKeyword
@@ -242,6 +245,7 @@ hi def link sasIMLStatementKeyword Statement
 hi def link sasMacroReserved Macro
 hi def link sasMacroFuncName Define
 hi def link sasMacroVariable Define
+hi def link sasDataLine SpecialChar
 hi def link sasFormatTag SpecialChar
 hi def link sasReserved Special
 
