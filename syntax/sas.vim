@@ -119,11 +119,11 @@ syn keyword sasFunctionName n netpv nliteral nmiss nomrate normal notalnum notal
 syn keyword sasCallRoutineName allcomb allcombi allperm cats catt catx compcost execute graycode is8601_convert label lexcomb lexcombi lexperk lexperm logistic missing module poke pokelong prxchange prxdebug prxfree prxnext prxposn prxsubstr ranbin rancau rancomb ranexp rangam rannor ranperk ranperm ranpoi rantbl rantri ranuni scan set sleep softmax sortc sortn stdize streaminit symput symputx system tanh tso vname vnext wto contained
 syn match sasFunctionHead '\v<\w+\(' display contained contains=sasFunctionName,sasCallRoutineName
 syn region sasFunction start='\v<\w+\(' end=')' contains=@sasBasicSyntax,sasFunctionHead
-syn region sasMacroFunc matchgroup=sasMacroFuncName start='\v\%\w+\ze\(' end=')'me=s-1 contains=@sasBasicSyntax
 
 " Macros
 syn match sasMacroVariable '\v\&+\w+%(\.\w+)=' display
 syn match sasMacroReserved '\v\%%(abort|by|copy|display|do|else|end|global|goto|if|include|input|let|list|local|macro|mend|put|return|run|symdel|syscall|sysexec|syslput|sysrput|then|to|until|window|while)>' display
+syn region sasMacroFunc matchgroup=sasMacroFuncName start='\v\%\w+\ze\(' end=')'me=s-1 contains=@sasBasicSyntax
 
 " Syntax cluster for basic SAS syntaxes
 syn cluster sasBasicSyntax contains=sasOperator,sasReserved,sasNumber,sasString,sasFormatTag,sasComment,sasFunction,sasMacroReserved,sasMacroFunc,sasMacroVariable,sasSectLbl
