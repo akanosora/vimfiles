@@ -170,11 +170,12 @@ syn match sasProcTemplateStatement '\v%(^|;)\s*\zslayout%(\s+\w+)=>' display tra
 syn region sasProcTemplate matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc\s+template>' end='\v%(^|;)\s*%(data|endsas|proc|quit|run)>'me=s-1 fold contains=@sasBasicSyntax,sasProcTemplateClause,sasProcTemplateStatement
 
 " Proc SQL, 9.4
-syn keyword sasProcSQLClause add as asc between by calculated cascade case check connection constraint cross delete desc distinct drop else end escape except exists foreign from full group having in inner intersect into is join key left libname like modify natural newline notrim null on order outer references restrict right select separated set then to trimmed union unique update user using values when where contained
+syn keyword sasProcSQLClause add asc between by calculated cascade case check connection constraint cross desc distinct drop else end escape except exists foreign from full group having in inner intersect into is join key left libname like modify natural newline notrim null on order outer primary references restrict right separated set then to trimmed union unique user using values when where contained
+syn keyword sasProcSQLClause as contained nextgroup=sasProcSQLStatementKeyword skipwhite skipnl skipempty
 syn keyword sasProcSQLStatementKeyword connect delete disconnect execute insert reset select update validate contained
-syn match sasProcSQLStatement '\v%(^|;)\s*\zs\w+>' display transparent contained contains=sasProcSQLStatementKeyword,sasGlobalStatementKeyword
-syn keyword sasProcSQLStatementComplexKeyword alter create describe drop index table view contained
-syn match sasProcSQLStatement '\v%(^|;)\s*\zs%(alter|create|describe|drop)%(\s+\w+)=>' display transparent contained contains=sasProcSQLStatementComplexKeyword
+syn match sasProcSQLStatement '\v%(^|;)\s*\zs%(validate\s+)=\w+>' display transparent contained contains=sasProcSQLStatementKeyword,sasGlobalStatementKeyword
+syn keyword sasProcSQLStatementComplexKeyword alter create describe drop index table view validate contained
+syn match sasProcSQLStatement '\v%(^|;)\s*\zs%(validate\s+)=%(alter|create|describe|drop)%(\s+\w+)=>' display transparent contained contains=sasProcSQLStatementComplexKeyword
 syn region sasProcSQL matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc\s+sql>' end='\v%(^|;)\s*%(data|endsas|proc|quit|run)>'me=s-1 fold contains=@sasBasicSyntax,sasProcSQLClause,sasProcSQLStatement
 
 " SAS/DS2, 9.4
