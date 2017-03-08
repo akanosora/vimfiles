@@ -133,7 +133,8 @@ syn keyword sasODSStatementKeyword ods chtml csvall docbook document escapechar 
 syn match sasODSStatment '\v%(^|;)\s*\zsods%(\s+\w+)=>' display transparent contains=sasODSStatementKeyword
 
 " Data step statements, 9.4
-syn keyword sasDataStepControl by continue do else end go goto if leave link otherwise over return select then to until when while contained
+syn keyword sasDataStepControl by continue do end go goto if leave link otherwise over return select to until when while contained
+syn keyword sasDataStepControl else then contained nextgroup=sasDataStepStatementKeyword skipwhite skipnl skipempty
 syn keyword sasDataStepStatementKeyword abort array attrib by call cards cards4 datalines datalines4 delete describe display drop error execute file format infile informat input keep label length lines lines4 list lostcard merge modify output put putlog redirect remove rename replace retain set stop update where window contained
 syn match sasDataStepStatement '\v%(^|;)\s*\zs\w+>' display transparent contained contains=sasDataStepStatementKeyword,sasGlobalStatementKeyword
 syn keyword sasDataStepStatementHashKeyword dcl declare hash hiter javaobj contained
