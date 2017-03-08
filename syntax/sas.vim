@@ -103,7 +103,7 @@ syn region sasString start=+'+ end=+'+ contains=@Spell
 syn region sasString start=+"+ end=+"+ contains=sasMacroVariable,@Spell
 
 " Format tag
-syn match sasFormatTag '\v<\$=\K\k*\.\d*\ze%(\H|$)' display contained
+syn match sasFormatTag '\v<\$=\K\k*\.\d*\ze%(\s|;|$)' display contained
 
 " Comments
 syn region sasComment start='/\*' end='\*/'
@@ -126,11 +126,8 @@ syn match sasMacroReserved '\v\%%(abort|by|copy|display|do|else|end|global|goto|
 syn cluster sasBasicSyntax contains=sasOperator,sasReserved,sasNumber,sasString,sasFormatTag,sasComment,sasFunction,sasMacroReserved,sasMacroFunc,sasMacroVariable,sasSectLbl
 
 " Define global statements that can be accessed out of data step or procedures
-syn keyword sasGlobalStatementKeyword catname dm endsas filename footnote footnote1 footnote2 footnote3 footnote4 footnote5 footnote6 footnote7 footnote8 footnote9 footnote10 missing libname lock options page quit resetline run sasfile skip sysecho title title1 title2 title3 title4 title5 title6 title7 title8 title9 title10 contained
+syn keyword sasGlobalStatementKeyword catname dm endsas filename footnote footnote1 footnote2 footnote3 footnote4 footnote5 footnote6 footnote7 footnote8 footnote9 footnote10 missing libname lock ods options page quit resetline run sasfile skip sysecho title title1 title2 title3 title4 title5 title6 title7 title8 title9 title10 contained
 syn match sasGlobalStatement '\v%(^|;)\s*\zs\w+>' display transparent contains=sasGlobalStatementKeyword
-" Define ODS statements that can be accessed out of data steps or procedures
-syn keyword sasODSStatementKeyword ods chtml csvall docbook document escapechar exclude graphics html3 html htmlcss imode listing markup output package path pcl pdf preferences phtml printer proclabel proctitle ps results rtf select show tagsets trace usegopt verify wml contained
-syn match sasODSStatment '\v%(^|;)\s*\zsods%(\s+\w+)=>' display transparent contains=sasODSStatementKeyword
 
 " Data step statements, 9.4
 syn keyword sasDataStepControl by continue do end go goto if leave link otherwise over return select to until when while contained
@@ -195,7 +192,7 @@ syn match sasIMLStatement '\v%(^|;)\s*\zs\w+>' display transparent contained con
 syn region sasIML matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc\s+iml>' end='\v%(^|;)\s*%(data|endsas|proc|quit)>'me=s-1 fold contains=@sasBasicSyntax,sasIMLControl,sasIMLStatement
 
 " Macro definition
-syn region sasMacro start='\v\%macro>' end='\v\%mend>' fold keepend contains=@sasBasicSyntax,sasGlobalStatement,sasODSStatment,sasDataStepControl,sasDataStepStatement,sasDataStep,sasProc,sasODSGraphicsProc,sasGraphProc,sasAnalyticalProc,sasProcTemplate,sasProcSQL,sasDS2,sasIML
+syn region sasMacro start='\v\%macro>' end='\v\%mend>' fold keepend contains=@sasBasicSyntax,sasGlobalStatement,sasDataStepControl,sasDataStepStatement,sasDataStep,sasProc,sasODSGraphicsProc,sasGraphProc,sasAnalyticalProc,sasProcTemplate,sasProcSQL,sasDS2,sasIML
 
 " Define default highlighting
 hi def link sasComment Comment
@@ -212,7 +209,6 @@ hi def link sasString String
 hi def link sasFunctionName Function
 hi def link sasCallRoutineName Function
 hi def link sasGlobalStatementKeyword Statement
-hi def link sasODSStatementKeyword Statement
 hi def link sasSectionKeyword Statement
 hi def link sasDataStepStatementKeyword Statement
 hi def link sasDataStepStatementHashKeyword Statement
