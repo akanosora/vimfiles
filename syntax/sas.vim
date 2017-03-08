@@ -160,13 +160,13 @@ syn region sasAnalyticalProc matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsp
 
 " Proc TEMPLATE, 9.4
 syn keyword sasProcTemplateClause as into
-syn keyword sasProcTemplateStatementKeyword block break cellstyle class close column compute continue delete delstream do done dynamic edit else end eval flush footer header import iterate link list mvar ndent next nmvar notes open path put putl putlog putq putstream putvars replace set source stop style test text text2 text3 translate trigger unblock unset xdent
+syn keyword sasProcTemplateStatementKeyword block break cellstyle class close column compute continue delete delstream do done dynamic edit else end eval flush footer header import iterate link list mvar ndent next nmvar notes open path put putl putlog putq putstream putvars replace set source stop style test text text2 text3 translate trigger unblock unset xdent contained
 syn keyword sasProcTemplateGTLStatementKeyword axislegend axistable bandplot barchart barchartparm begingraph beginpolygon beginpolyline bihistogram3dparm blockplot boxplot boxplotparm bubbleplot continuouslegend contourplotparm dendrogram discretelegend drawarrow drawimage drawline drawoval drawrectangle drawtext dropline ellipse ellipseparm endgraph endinnermargin endlayout endpolygon endpolyline endsidebar entry entryfootnote entrytitle fringeplot heatmap heatmapparm highlowplot histogram histogramparm innermargin legenditem legendtextitems linechart lineparm loessplot mergedlegend modelband needleplot pbsplineplot polygonplot referenceline regressionplot scatterplot seriesplot sidebar stepplot surfaceplotparm symbolchar symbolimage textplot vectorplot waterfallchart contained
 syn match sasProcTemplateStatement '\v%(^|;)\s*\zs\w+>' display transparent contained contains=sasProcTemplateStatementKeyword,sasProcTemplateGTLStatementKeyword,sasGlobalStatementKeyword
-syn keyword sasProcTemplateStatementComplexKeyword define cellvalue column crosstabs event footer header statgraph style table tagset
+syn keyword sasProcTemplateStatementComplexKeyword define cellvalue column crosstabs event footer header statgraph style table tagset contained
 syn match sasProcTemplateStatement '\v%(^|;)\s*\zsdefine%(\s+\w+)=>' display transparent contained contains=sasProcTemplateStatementComplexKeyword
-syn keyword sasProcTemplateGTLStatementComplexKeyword layout datalattice datapanel globallegend gridded lattice overlay overlayequated overlay3d region contained
-syn match sasProcTemplateStatement '\v%(^|;)\s*\zslayout%(\s+\w+)=>' display transparent contained contains=sasProcTemplateGTLStatementComplexKeyword
+syn keyword sasProcTemplateGTLComplexKeyword layout datalattice datapanel globallegend gridded lattice overlay overlayequated overlay3d region contained
+syn match sasProcTemplateStatement '\v%(^|;)\s*\zslayout%(\s+\w+)=>' display transparent contained contains=sasProcTemplateGTLComplexKeyword
 syn region sasProcTemplate matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc\s+template>' end='\v%(^|;)\s*%(data|endsas|proc|quit|run)>'me=s-1 fold contains=@sasBasicSyntax,sasProcTemplateClause,sasProcTemplateStatement
 
 " Proc SQL, 9.4
@@ -219,7 +219,7 @@ hi def link sasAnalyticalProcStatementKeyword Statement
 hi def link sasProcTemplateStatementKeyword Statement
 hi def link sasProcTemplateStatementComplexKeyword Statement
 hi def link sasProcTemplateGTLStatementKeyword Statement
-hi def link sasProcTemplateGTLStatementComplexKeyword Statment
+hi def link sasProcTemplateGTLComplexKeyword Statement
 hi def link sasProcSQLStatementKeyword Statement
 hi def link sasProcSQLStatementComplexKeyword Statement
 hi def link sasDS2StatementKeyword Statement
