@@ -182,6 +182,9 @@ syn match sasProcTemplateStatement '\v%(^|;)\s*\zsods>' display contained contai
 syn region sasProcTemplate matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc\s+template>' end='\v%(^|;)\s*%(data|endsas|proc|quit|run)>'me=s-1 fold contains=@sasBasicSyntax,sasProcTemplateClause,sasProcTemplateStatement
 
 " Proc SQL, 9.4
+syn keyword sasProcSQLFunctionName avg count css cv freq max mean median min n nmiss prt range std stderr sum sumwgt t uss var
+syn match sasProcSQLFunctionHead '\v<\w+\(' display contained contains=sasProcSQLFunctionName
+syn region sasProcSQLFunction start='\v<\w+\(' end=')' contains=@sasBasicSyntax,sasProcSQLFunction,sasProcSQLFunctionHead
 syn keyword sasProcSQLClause add asc between by calculated cascade case check connection constraint cross desc distinct drop else end escape except exists foreign from full group having in inner intersect into is join key left libname like modify natural newline notrim null on order outer primary references restrict right separated set then to trimmed union unique user using values when where contained
 syn keyword sasProcSQLClause as contained nextgroup=sasProcSQLStatementKeyword skipwhite skipnl skipempty
 syn keyword sasProcSQLStatementKeyword connect delete disconnect execute insert reset select update validate contained
@@ -190,7 +193,7 @@ syn keyword sasProcSQLStatementNextKeyword index table view contained
 syn match sasProcSQLStatement '\v%(^|;)\s*\zs\h\w*>' display contained contains=sasProcSQLStatementKeyword,sasGlobalStatementKeyword
 syn match sasProcSQLStatement '\v%(^|;)\s*\zs%(alter|create|describe|drop)>' display contained contains=sasProcSQLStatementComplexKeyword nextgroup=sasProcSQLStatementNextKeyword skipwhite skipnl skipempty 
 syn match sasProcSQLStatement '\v%(^|;)\s*\zsvalidate>' display contained contains=sasProcSQLStatementKeyword nextgroup=sasProcSQLStatementKeyword,sasProcSQLStatementComplexKeyword skipwhite skipnl skipempty
-syn region sasProcSQL matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc\s+sql>' end='\v%(^|;)\s*%(data|endsas|proc|quit|run)>'me=s-1 fold contains=@sasBasicSyntax,sasProcSQLClause,sasProcSQLStatement
+syn region sasProcSQL matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc\s+sql>' end='\v%(^|;)\s*%(data|endsas|proc|quit|run)>'me=s-1 fold contains=@sasBasicSyntax,sasProcSQLFunction,sasProcSQLClause,sasProcSQLStatement
 
 " SAS/DS2, 9.4
 syn keyword sasDS2Control continue data dcl declare do drop else end enddata endpackage endthread from go goto if leave method otherwise package point return select then thread to until when while contained
@@ -202,11 +205,15 @@ syn match sasDS2Statement '\v%(^|;)\s*\zsods>' display contained contains=sasGlo
 syn region sasDS2 matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc\s+ds2>' end='\v%(^|;)\s*%(data|endsas|proc|quit|run)>'me=s-1 fold contains=@sasBasicSyntax,sasDS2Control,sasDS2Statement
 
 " SAS/IML, 14.1
+syn keyword sasIMLFunctionName abs all allcomb allperm any apply armasim bin blankstr block branks bspline btran byte char choose col colvec concat contents convexit corr corr2cov countmiss countn countunique cov cov2corr covlag cshape cusum cuprod cv cvexhull datasets design designf det diag dif dimension distance do duration echelon eigval eigvec element exp expmatrix expandgrid fft forward froot full gasetup geomean ginv hadamard half hankel harmean hdir hermite homogen i ifft insert int inv invupdt isempty isskipped j jroot kurtosis lag length loc log logabsdet mad magic mahalanobis max mean median min mod moduleic modulein name ncol ndx2sub nleng norm normal nrow num opscal orpol parentname palette polyroot prod product pv quartile rancomb randdirichlet randfun randmultinomial randmvt randnormal randwishart ranperk ranperm range rank ranktie rates ratio remove repeat root row rowcat rowcatc rowvec rsubstr sample setdif shape shapecol skewness solve sparse splinev spot sqrsym sqrt sqrvech ssq standard std storage sub2ndx substr sum sweep symsqr t toeplitz trace trisolv type uniform union unique uniqueby value var vecdiag vech xmult xsect yield contained
+syn keyword sasIMLCallRoutineName appcort armacov armalik bar box change comport delete eigen execute exportdatasettor exportmatrixtor farmacov farmafit farmalik farmasim fdif gaend gagetmem gagetval gainit gareeval garegen gasetcro gasetmut gasetobj gasetsel gblkvp gblkvpd gclose gdelete gdraw gdrawl geneig ggrid ginclude gopen gpie gpiexy gpoint gpoly gport gportpop gportstk gscale gscript gset gshow gsorth gstart gstop gstrlen gtext gvtext gwindow gxaxis gyaxis heatmapcont heatmapdisc histogram importdatasetfromr importmatrixfromr ipf itsolver kalcvf kalcvs kaldff kaldfs lav lcp lms lp lpsolve lts lupdt marg maxqform mcd milpsolve modulei mve nlpcg nlpdd nlpfdd nlpfea nlphqn nlplm nlpnms nlpnra nlpnrr nlpqn nlpqua nlptr ode odsgraph ortvec pgraf push qntl qr quad queue randgen randseed rdodt rupdt rename rupdt rzlind scatter seq seqscale seqshift seqscale seqshift series solvelin sort sortndx sound spline splinec svd tabulate tpspline tpsplnev tsbaysea tsdecomp tsmlocar tsmlomar tsmulmar tspears tspred tsroot tstvcar tsunimar valset varmacov varmalik varmasim vnormal vtsroot wavft wavget wavift wavprint wavthrsh contained
+syn match sasIMLFunctionHead '\v<\w+\(' display contained contains=sasIMLFunctionName,sasIMLCallRoutineName
+syn region sasIMLFunction start='\v<\w+\(' end=')' contains=@sasBasicSyntax,sasIMLFunction,sasIMLFunctionHead
 syn keyword sasIMLControl abort by do else end finish goto if link pause quit resume return run start stop then to until while contained
-syn keyword sasIMLStatementKeyword append close create delete edit find free list load mattrib print purge read reset remove setin setout show sort store use contained
+syn keyword sasIMLStatementKeyword append call close closefile create delete display edit file find force free index infile input list load mattrib print purge read remove replace reset save setin setout show sort store summary use window contained
 syn match sasIMLStatement '\v%(^|;)\s*\zs\h\w*>' display contained contains=sasIMLStatementKeyword,sasGlobalStatementKeyword
 syn match sasIMLStatement '\v%(^|;)\s*\zsods>' display contained contains=sasGlobalStatementKeyword nextgroup=sasGlobalStatementODSKeyword skipwhite skipnl skipempty
-syn region sasIML matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc\s+iml>' end='\v%(^|;)\s*%(data|endsas|proc|quit)>'me=s-1 fold contains=@sasBasicSyntax,sasIMLControl,sasIMLStatement
+syn region sasIML matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc\s+iml>' end='\v%(^|;)\s*%(data|endsas|proc|quit)>'me=s-1 fold contains=@sasBasicSyntax,sasIMLFunction,sasIMLControl,sasIMLStatement
 
 " Macro definition
 syn region sasMacro start='\v\%macro>' end='\v\%mend>' fold keepend contains=@sasBasicSyntax,sasDataStepControl,sasDataStepStatement,sasDataStep,sasProc,sasODSGraphicsProc,sasGraphProc,sasAnalyticalProc,sasProcTemplate,sasProcSQL,sasDS2,sasIML
@@ -239,10 +246,13 @@ hi def link sasProcTemplateStatementKeyword Statement
 hi def link sasProcTemplateStatementComplexKeyword Statement
 hi def link sasProcTemplateGTLStatementKeyword Statement
 hi def link sasProcTemplateGTLComplexKeyword Statement
+hi def link sasProcSQLFunctionName Function
 hi def link sasProcSQLStatementKeyword Statement
 hi def link sasProcSQLStatementComplexKeyword Statement
 hi def link sasProcSQLStatementNextKeyword Statement
 hi def link sasDS2StatementKeyword Statement
+hi def link sasIMLFunctionName Function
+hi def link sasIMLCallRoutineName Function
 hi def link sasIMLStatementKeyword Statement
 hi def link sasMacroReserved Macro
 hi def link sasMacroFuncName Define
