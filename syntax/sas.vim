@@ -105,7 +105,7 @@ syn region sasString start=+'+ end=+'+ contains=@Spell
 syn region sasString start=+"+ end=+"+ contains=sasMacroVariable,@Spell
 
 " Format tag
-syn match sasFormatTag '\v<\$=\h\w*\.\d*\ze%(\s|;|$)' display contained
+syn match sasFormatTag '\v<\$=\h\w*\.\d*\ze\_[[:blank:];]' display contained
 
 " Comments
 syn keyword sasTodo todo tbd fixme contained
@@ -134,8 +134,14 @@ syn keyword sasDataStepFunctionName n netpv nliteral nmiss nomrate normal notaln
 syn keyword sasDataStepCallRoutineName allcomb allcombi allperm cats catt catx compcost execute graycode is8601_convert label lexcomb lexcombi lexperk lexperm logistic missing module poke pokelong prxchange prxdebug prxfree prxnext prxposn prxsubstr ranbin rancau rancomb ranexp rangam rannor ranperk ranperm ranpoi rantbl rantri ranuni scan set sleep softmax sortc sortn stdize streaminit symput symputx system tanh tso vname vnext wto contained
 syn match sasDataStepFunctionHead '\v<\w+\(' display contained contains=sasDataStepFunctionName,sasDataStepCallRoutineName
 syn region sasDataStepFunction start='\v<\w+\(' end=')' contained contains=@sasBasicSyntax,sasDataStepFunction,sasDataStepFunctionHead
+syn keyword sasDataStepHashMethodName add check clear definedata definedone definekey delete do_over equals find find_next find_prev first has_next has_prev last next output prev ref remove removedup replace replacedup reset_dup setcur sum sumdup contained
+syn match sasDataStepHashMethodHead '\v\.\w+\(' display contained contains=sasDataStepHashMethodName
+syn region sasDataStepHashMethod start='\v\.\w+\(' end=')' contained contains=@sasBasicSyntax,sasDataStepFunction,sasDataStepHashMethodHead
+syn keyword sasDataStepHashAttributeName item_size num_items contained
+syn match sasDataStepHashAttribute '\v\.\w+>\ze\_[^(]' display contained contains=sasDataStepHashAttributeName
 syn keyword sasDataStepControl continue do end go goto if leave link otherwise over return select to until when while contained
 syn keyword sasDataStepControl else then contained nextgroup=sasDataStepStatementKeyword skipwhite skipnl skipempty
+syn keyword sasDataStepHashOperator _new_ contained
 syn keyword sasDataStepStatementKeyword abort array attrib by call cards cards4 datalines datalines4 dcl declare delete describe display drop error execute file format infile informat input keep label length lines lines4 list lostcard merge modify output put putlog redirect remove rename replace retain set stop update where window contained
 syn keyword sasDataStepStatementHashKeyword hash hiter javaobj contained
 syn match sasDataStepStatement '\v%(^|;)\s*\zs\h\w*>' display contained contains=sasDataStepStatementKeyword,sasGlobalStatementKeyword
@@ -143,7 +149,8 @@ syn match sasDataStepStatement '\v%(^|;)\s*\zs%(dcl|declare)>' display contained
 syn match sasDataStepStatement '\v%(^|;)\s*\zsods>' display contained contains=sasGlobalStatementKeyword nextgroup=sasGlobalStatementODSKeyword skipwhite skipnl skipempty
 syn match sasDataStepStatement '\v%(^|;)\s*\zs%(cards|datalines|lines)4=\s*;' display contained contains=sasDataStepStatementKeyword nextgroup=sasDataLine skipwhite skipnl skipempty
 syn region sasDataLine start='^' end='^;'me=s-1 contained
-syn region sasDataStep matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsdata>' end='\v%(^|;)\s*%(data|endsas|proc|run)>'me=s-1 fold contains=@sasBasicSyntax,sasDataStepFunction,sasDataStepControl,sasDataStepStatement
+syn cluster sasDataStepSyntax contains=sasDataStepFunction,sasDataStepHashOperator,sasDataStepHashAttribute,sasDataStepHashMethod,sasDataStepControl,sasDataStepStatement
+syn region sasDataStep matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsdata>' end='\v%(^|;)\s*%(data|endsas|proc|run)>'me=s-1 fold contains=@sasBasicSyntax,@sasDataStepSyntax
 
 " Procedures, base SAS, 9.4
 syn keyword sasProcStatementKeyword abort age append array attrib audit block break by calid cdfplot change checkbox class classlev column compute contents copy create datarow dbencoding define delete deletefunc deletesubr delimiter device dialog dur endcomp exact exchange exclude explore fin fmtlib fontfile fontpath format formats freq function getnames guessingrows hbar hdfs histogram holidur holifin holistart holivar id idlabel informat inset invalue item key keylabel keyword label line link listfunc listsubr mapmiss mapreduce mean menu messages meta modify opentype outargs outdur outfin output outstart pageby partial picture pie pig plot ppplot printer probplot profile prompter qqplot radiobox ranks rbreak rbutton rebuild record remove rename repair report roptions save select selection separator source star start statistics struct submenu subroutine sum sumby table tables test text trantab truetype type1 types value var vbar ways weight where with write contained
@@ -218,7 +225,7 @@ syn match sasIMLStatement '\v%(^|;)\s*\zsods>' display contained contains=sasGlo
 syn region sasIML matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc\s+iml>' end='\v%(^|;)\s*%(data|endsas|proc|quit)>'me=s-1 fold contains=@sasBasicSyntax,sasDataStepFunction,sasIMLFunction,sasIMLControl,sasIMLStatement
 
 " Macro definition
-syn region sasMacro start='\v\%macro>' end='\v\%mend>' fold keepend contains=@sasBasicSyntax,sasDataStepFunction,sasDataStepControl,sasDataStepStatement,sasDataStep,sasProc,sasODSGraphicsProc,sasGraphProc,sasAnalyticalProc,sasProcTemplate,sasProcSQL,sasDS2,sasIML
+syn region sasMacro start='\v\%macro>' end='\v\%mend>' fold keepend contains=@sasBasicSyntax,@sasDataStepSyntax,sasDataStep,sasProc,sasODSGraphicsProc,sasGraphProc,sasAnalyticalProc,sasProcTemplate,sasProcSQL,sasDS2,sasIML
 
 " Define default highlighting
 hi def link sasComment Comment
@@ -240,6 +247,9 @@ hi def link sasDataStepFunctionName Function
 hi def link sasDataStepCallRoutineName Function
 hi def link sasDataStepStatementKeyword Statement
 hi def link sasDataStepStatementHashKeyword Statement
+hi def link sasDataStepHashOperator Operator
+hi def link sasDataStepHashMethodName Function
+hi def link sasDataStepHashAttributeName Identifier
 hi def link sasProcStatementKeyword Statement
 hi def link sasODSGraphicsProcStatementKeyword Statement
 hi def link sasGraphProcStatementKeyword Statement
