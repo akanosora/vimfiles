@@ -98,7 +98,7 @@ syn keyword sasOperator and eq ge gt in le lt ne not of or
 syn keyword sasReserved _all_ _automatic_ _char_ _character_ _data_ _infile_ _last_ _n_ _name_ _null_ _num_ _numeric_ _temporary_ _user_ _webout_
 
 " Numbers
-syn match sasNumber '\v<%(\d+)%(\.\d+)=%(e[\-+]=\d+)=>' display
+syn match sasNumber '\v<\d+%(\.\d+)=%(>|e[\-+]=\d+>)' display
 
 " Strings
 syn region sasString start=+'+ end=+'+ contains=@Spell
