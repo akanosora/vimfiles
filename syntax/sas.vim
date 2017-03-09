@@ -102,7 +102,6 @@ syn region sasString start=+'+ skip=+''+ end=+'+ contains=@Spell
 syn region sasString start=+"+ skip=+""+ end=+"+ contains=sasMacroVariable,@Spell
 " Constants
 syn match sasNumber /\v<\d+%(\.\d+)=%(>|e[\-+]=\d+>)/ display
-syn match sasNumber /\v<\x+x>/ display
 syn match sasDateTime /\v(['"])\d{2}%(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\d{2}%(\d{2})=:\d{2}:\d{2}%(:\d{2})=%(am|pm)\1dt>/ display
 syn match sasDateTime /\v(['"])\d{2}%(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\d{2}%(\d{2})=\1d>/ display
 syn match sasDateTime /\v(['"])\d{2}:\d{2}%(:\d{2})=%(am|pm)\1t>/ display
