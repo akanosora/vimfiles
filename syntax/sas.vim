@@ -257,9 +257,9 @@ hi def link sasDS2StatementKeyword Statement
 hi def link sasIMLFunctionName Function
 hi def link sasIMLCallRoutineName Function
 hi def link sasIMLStatementKeyword Statement
-hi def link sasMacroReserved Macro
-hi def link sasMacroFunctionName Define
+hi def link sasMacroReserved PreProc
 hi def link sasMacroVariable Define
+hi def link sasMacroFunctionName Define
 hi def link sasDataLine SpecialChar
 hi def link sasFormatTag SpecialChar
 hi def link sasReserved Special
