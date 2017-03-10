@@ -63,18 +63,9 @@ endfunction
 " Main function
 function! GetSASIndent()
   let prev_lnum = prevnonblank(v:lnum - 1)
-  let curr_line = getline(v:lnum)
   if prev_lnum ==# 0
-    " Keep the indentation of the first line
+    " Leave the indentation of the first line unchanged
     return indent(1)
-  elseif curr_line =~ s:program_end
-    " End of the program
-    " Same indentation as the first non-blank line
-    return indent(nextnonblank(1))
-  elseif curr_line =~ s:macro_end
-    " Current line is the end of a macro
-    " Match the indentation of the start of the macro
-    return indent(s:PrevMatch(v:lnum, s:macro_str))
   else
     let prev_line = getline(prev_lnum)
     " Previous non-blank line contains the start of a macro/section/block
@@ -84,11 +75,11 @@ function! GetSASIndent()
           \ (prev_line =~ s:macro_str && prev_line !~ s:macro_end)
       let ind = indent(prev_lnum) + &sts
     elseif prev_line =~ s:section_run && prev_line !~ s:section_end
-      let prev_section_str_lnum = s:PrevMatch(prev_lnum, s:section_str)
+      let prev_section_str_lnum = s:PrevMatch(v:lnum, s:section_str)
       let prev_section_end_lnum = max([
-            \ s:PrevMatch(prev_lnum, s:section_end),
-            \ s:PrevMatch(prev_lnum, s:macro_end  ),
-            \ s:PrevMatch(prev_lnum, s:program_end)])
+            \ s:PrevMatch(v:lnum, s:section_end),
+            \ s:PrevMatch(v:lnum, s:macro_end  ),
+            \ s:PrevMatch(v:lnum, s:program_end)])
       " Check if the section supports run-processing
       if prev_section_end_lnum < prev_section_str_lnum &&
             \ getline(prev_section_str_lnum) =~ '\v%(^|;)\s*proc\s+%(' .
@@ -100,35 +91,44 @@ function! GetSASIndent()
     else
       let ind = indent(prev_lnum)
     endif
-    " Re-adjustments
-    if curr_line =~ s:block_end && curr_line !~ s:block_str
-      " Re-adjust if current line is the end of a block
-      " while not the beginning of a block (at the same line)
-      let ind = ind - &sts
-    elseif curr_line =~ s:section_str || curr_line =~ s:section_run || curr_line =~ s:section_end
-      " Re-adjust if current line is the start/end of a section
-      " since the end of a section could be inexplicit
-      let prev_section_str_lnum = s:PrevMatch(v:lnum, s:section_str)
-      " Check if the previous section supports run-processing
-      if getline(prev_section_str_lnum) =~ '\v%(^|;)\s*proc\s+%(' .
-            \ join(s:run_processing_procs, '|') . ')>'
-        let prev_section_end_lnum = max([
-              \ s:PrevMatch(v:lnum, s:section_end),
-              \ s:PrevMatch(v:lnum, s:macro_end  ),
-              \ s:PrevMatch(v:lnum, s:program_end)])
-      else
-        let prev_section_end_lnum = max([
-              \ s:PrevMatch(v:lnum, s:section_end),
-              \ s:PrevMatch(v:lnum, s:section_run),
-              \ s:PrevMatch(v:lnum, s:macro_end  ),
-              \ s:PrevMatch(v:lnum, s:program_end)])
-      endif
-      if prev_section_end_lnum < prev_section_str_lnum
-        let ind = ind - &sts
-      endif
-    endif
-    return ind
   endif
+  " Re-adjustments based on the inputs of the current line
+  let curr_line = getline(v:lnum)
+  if curr_line =~ s:program_end
+    " End of the program
+    " Same indentation as the first non-blank line
+    return indent(nextnonblank(1))
+  elseif curr_line =~ s:macro_end
+    " Current line is the end of a macro
+    " Match the indentation of the start of the macro
+    return indent(s:PrevMatch(v:lnum, s:macro_str))
+  elseif curr_line =~ s:block_end && curr_line !~ s:block_str
+    " Re-adjust if current line is the end of a block
+    " while not the beginning of a block (at the same line)
+    let ind = ind - &sts
+  elseif curr_line =~ s:section_str || curr_line =~ s:section_run || curr_line =~ s:section_end
+    " Re-adjust if current line is the start/end of a section
+    " since the end of a section could be inexplicit
+    let prev_section_str_lnum = s:PrevMatch(v:lnum, s:section_str)
+    " Check if the previous section supports run-processing
+    if getline(prev_section_str_lnum) =~ '\v%(^|;)\s*proc\s+%(' .
+          \ join(s:run_processing_procs, '|') . ')>'
+      let prev_section_end_lnum = max([
+            \ s:PrevMatch(v:lnum, s:section_end),
+            \ s:PrevMatch(v:lnum, s:macro_end  ),
+            \ s:PrevMatch(v:lnum, s:program_end)])
+    else
+      let prev_section_end_lnum = max([
+            \ s:PrevMatch(v:lnum, s:section_end),
+            \ s:PrevMatch(v:lnum, s:section_run),
+            \ s:PrevMatch(v:lnum, s:macro_end  ),
+            \ s:PrevMatch(v:lnum, s:program_end)])
+    endif
+    if prev_section_end_lnum < prev_section_str_lnum
+      let ind = ind - &sts
+    endif
+  endif
+  return ind
 endfunction
 
 let &cpo = s:cpo_save
