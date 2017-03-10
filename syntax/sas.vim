@@ -2,19 +2,21 @@
 " Language:     SAS
 " Maintainer:   Zhen-Huan Hu <wildkeny@gmail.com>
 " Version:      3.0.0
-" Last Change:  Mar 09, 2017
+" Last Change:  Mar 10, 2017
 "
 " 2017 Mar 7
 "
-" Largely improve speed
-" Improve SQL syntax accuracy
-" Add new keywords in the latest SAS (as of Mar 2017)
-" Add syntaxes for date/time constants
-" Add syntax for data lines
+" Upgrade version number to 3.0. Improvements include:
+" - Improve sync speed
+" - Largely enhance precision
+" - Update keywords in the latest SAS (as of Mar 2017)
+" - Add syntaxes for date/time constants
+" - Add syntax for data lines
+" - Add (back) syntax for TODO in comments
 "
 " 2017 Feb 9
 "
-" Add syntax folding marks
+" Add syntax folding 
 "
 " 2016 Oct 10
 "
@@ -38,50 +40,15 @@
 " - Higher precision
 " - Faster synchronization
 " - Separate color for control statements
-" - Hightlight macro variables in double quoted strings
+" - Highlight hash and java objects
+" - Highlight macro variables in double quoted strings
 " - Update all syntaxes based on SAS 9.4
 " - Add complete SAS/GRAPH and SAS/STAT procedure syntaxes
 " - Add Proc TEMPLATE and GTL syntaxes
 " - Add complete DS2 syntaxes
 " - Add basic IML syntaxes
 " - Many other improvements and bug fixes
-" Drop support for earlier versions of VIM
-"
-" 2012 Feb 27
-"
-" Rewrite the entire matching algorithm
-" Add keywords in Base SAS 9.3 and SAS/Stat
-" Fix issues in highlighting procedure names and internal variables
-" Add highlighting for hash and hiter objects
-"
-" 2011 Apr 1
-"
-" Simplify matching algorithm
-" Fix mis-matching of some keywords and function names
-" Fix an issue caused by multiple comments written at the same line
-" Add highlighting for new statements and functions in SAS 9.1/9.2
-" Add highlighting for user defined macro functions
-" Add highlighting for format tags
-"
-" 2008 Jul 18 by Paulo Tanimoto <ptanimoto@gmail.com>
-"
-" Fix comments with asterisks taking multiple lines
-" Fix highlighting of macro keywords
-" Add words to cases that do not fit anywhere
-"
-" 2003 Jun 2 by Bob Heckel
-"
-" Add highlighting for additional keywords and such
-" Attempt to match SAS default syntax colors
-" Change syncing so it does not lose colors on large blocks
-"
-" 2001 Sep 26 by James Kidd
-"
-" Add keywords for use in SAS SQL procedure
-" Add highlighting for SAS base procedures
-" Add logic to distinqush between versions for SAS macro variable highlighting
-" - For SAS 5: Clear all syntax items
-" - For SAS 6: Quit when a syntax file was already loaded
+" Drop support for VIM version < 600
 
 if version < 600
   syntax clear
