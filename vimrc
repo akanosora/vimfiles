@@ -48,7 +48,7 @@ set hlsearch ignorecase smartcase
 
 " Color Scheme {{{
 set background=dark
-colorscheme waikiki
+colorscheme afterglow
 
 " Syntax
 if version >= 500
