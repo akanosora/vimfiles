@@ -113,8 +113,8 @@ syn region sasSectLbl matchgroup=sasSectLblEnds start='/\*\*\s*' end='\s*\*\*/' 
 " Macros
 syn match sasMacroVariable '\v\&+\w+%(\.\w+)=' display
 syn match sasMacroReserved '\v\%%(abort|by|copy|display|do|else|end|global|goto|if|include|input|let|list|local|macro|mend|put|return|run|symdel|syscall|sysexec|syslput|sysrput|then|to|until|window|while)>' display
-syn region sasMacroFunction matchgroup=sasMacroFunctionName start='\v\%\w+\(' end=')' contains=@sasBasicSyntax
-syn region sasMacroFunction matchgroup=sasMacroFunctionName start='\v\%q=sysfunc\(' end=')' contains=@sasBasicSyntax,sasDataStepFunction
+syn region sasMacroFunction matchgroup=sasMacroFunctionName start='\v\%\w+\ze\(' end=')'he=s-1 contains=@sasBasicSyntax,sasMacroFunction
+syn region sasMacroFunction matchgroup=sasMacroFunctionName start='\v\%q=sysfunc\ze\(' end=')'he=s-1 contains=@sasBasicSyntax,sasMacroFunction,sasDataStepFunction
 " Syntax cluster for basic SAS syntaxes
 syn cluster sasBasicSyntax contains=sasOperator,sasReserved,sasNumber,sasDateTime,sasString,sasComment,sasMacroReserved,sasMacroFunction,sasMacroVariable,sasSectLbl
 
