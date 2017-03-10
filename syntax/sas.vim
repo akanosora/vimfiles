@@ -162,7 +162,7 @@ syn match sasProcStatement '\v%(^|;)\s*\zs\h\w*>' display contained contains=sas
 syn match sasProcStatement '\v%(^|;)\s*\zsods>' display contained contains=sasGlobalStatementKeyword nextgroup=sasGlobalStatementODSKeyword skipwhite skipnl skipempty
 syn match sasProcStatement '\v%(^|;)\s*\zs%(format|informat)>' display contained contains=sasProcStatementKeyword nextgroup=sasFormatContext skipwhite skipnl skipempty
 syn region sasProc matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc%(\s+\h\w*)=>' end='\v%(^|;)\s*%(run|data|proc|endsas)>'me=s-1 fold contains=@sasBasicSyntax,sasDataStepFunction,sasProcStatement
-syn region sasProc matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc%(catalog|chart|datasets|document|plot)>' end='\v%(^|;)\s*%(quit|data|proc|endsas)>'me=s-1 fold contains=@sasBasicSyntax,sasDataStepFunction,sasProcStatement
+syn region sasProc matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc\s+%(catalog|chart|datasets|document|plot)>' end='\v%(^|;)\s*%(quit|data|proc|endsas)>'me=s-1 fold contains=@sasBasicSyntax,sasDataStepFunction,sasProcStatement
 
 " Procedures, SAS/GRAPH, 9.4
 syn keyword sasGraphProcStatementKeyword add area axis bar block bubble2 byline cc ccopy cdef cdelete chart cmap choro copy delete device dial donut exclude flow format fs goptions gout grid group hbar hbar3d hbullet hslider htrafficlight id igout label legend list modify move nobyline note pattern pie pie3d plot plot2 preview prism quit rename replay select scatter speedometer star surface symbol tc tcopy tdef tdelete template tile toggle treplay vbar vbar3d vtrafficlight vbullet vslider where contained
