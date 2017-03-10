@@ -26,10 +26,10 @@ let s:section_run = '\v%(^|;)\s*run\s*;'
 " Regex that captures the end of a data/proc section
 let s:section_end = '\v%(^|;)\s*%(quit|enddata)\s*;'
 
-" Regex that captures the start of a control block
+" Regex that captures the start of a control block (anything inside a section)
 let s:block_str = '\v<%(do>%([^;]+<%(to|over)>[^;]+)=|%(define|layout|method|select)>[^;]+|begingraph);'
-" Regex that captures the end of a control block
-let s:block_end = '\v<%(^|;)\s*%(end|endlayout|endgraph)\s*;'
+" Regex that captures the end of a control block (anything inside a section)
+let s:block_end = '\v%(^|;)\s*%(end|endlayout|endgraph)\s*;'
 
 " Regex that captures the start of a macro
 let s:macro_str = '\v%(^|;)\s*\%macro>'
@@ -105,6 +105,8 @@ function! GetSASIndent()
   elseif curr_line =~ s:block_end && curr_line !~ s:block_str
     " Re-adjust if current line is the end of a block
     " while not the beginning of a block (at the same line)
+    " Returning the indent of previous block start directly
+    " would not work due to nesting
     let ind = ind - &sts
   elseif curr_line =~ s:section_str || curr_line =~ s:section_run || curr_line =~ s:section_end
     " Re-adjust if current line is the start/end of a section
