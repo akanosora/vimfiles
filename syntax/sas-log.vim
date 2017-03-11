@@ -1,12 +1,12 @@
 " Vim syntax file
 " Language:     SAS log file
 " Maintainer:   Zhenhuan Hu <zhu@mcw.edu>
-" Last Change:  2017-01-23
+" Last Change:  Mar 11, 2017
 
 " Quit when a syntax file was already loaded
 if version < 600
   syntax clear
-elseif exists("b:current_syntax")
+elseif exists('b:current_syntax')
   finish
 endif
 
@@ -16,7 +16,7 @@ set cpo&vim
 syn case match
 
 " Numbers
-syn match saslogNumber "\v<\-=%(\d+\.=\d*|\.\d+)%(e\-=\d+)=>" display contained
+syn match saslogNumber /\v<\d+%(\.\d+)=%(>|e[\-+]=\d+>)/ display contained
 
 " Notes
 syn keyword saslogSpecialKwd uninitialized contained
@@ -44,7 +44,7 @@ hi def link saslogSpecialKwd SpecialComment
 " syntax coloring while moving through code.
 syn sync fromstart
 
-let b:current_syntax = "sas-log"
+let b:current_syntax = 'sas-log'
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
