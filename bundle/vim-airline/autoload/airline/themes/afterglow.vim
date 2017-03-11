@@ -53,13 +53,13 @@ let g:airline#themes#afterglow#palette.replace_modified = {
       \ }
 
 " Visual mode
-let s:V1 = s:ColorExpand('#181b20', s:orange )
+let s:V1 = s:ColorExpand('#181b20', s:yellow )
 let s:V2 = s:ColorExpand('#d1d5dc', '#4b5362')
 let s:V3 = s:ColorExpand('#d1d5dc', '#21252b')
 
 let g:airline#themes#afterglow#palette.visual = airline#themes#generate_color_map(s:V1, s:V2, s:V3)
 let g:airline#themes#afterglow#palette.visual_modified = {
-      \ 'airline_c': s:ColorExpand(s:orange, '#21252b'),
+      \ 'airline_c': s:ColorExpand(s:yellow, '#21252b'),
       \ }
 
 " Inactive

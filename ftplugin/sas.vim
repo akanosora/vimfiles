@@ -86,7 +86,7 @@ function! s:RunSAS()
       echoh WarningMsg | echo 'SAS System issued warning(s)' | echoh None
     elseif v:shell_error ==# 2
       echoh ErrorMsg | echo 'SAS System issued error(s)' | echoh None
-    endif    
+    endif
   elseif v:shell_error ==# 3
     echo 'User issued the ABORT statement'
   elseif v:shell_error ==# 4
