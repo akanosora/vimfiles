@@ -246,4 +246,4 @@ call s:SetColor("Underlined", s:fgpalette[0], s:bgpalette[2], "underline")
 " https://groups.google.com/forum/#!msg/vim_dev/afPqwAFNdrU/nqh6tOM87QUJ
 let &background = s:bgsetting
 
-" vim: set sw=2 ts=2 sts=2 et tw=80 ft=vim fdm=marker:
+" vim: set sw=2 ts=2 sts=2 et tw=80 ft=vim fdm=marker fdl=2:
