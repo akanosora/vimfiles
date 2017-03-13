@@ -1,8 +1,8 @@
 " Vim indent file
 " Language:     SAS
 " Maintainer:   Zhen-Huan Hu <wildkeny@gmail.com>
-" Version:      3.0.0
-" Last Change:  Mar 10, 2017
+" Version:      3.0.1
+" Last Change:  Mar 13, 2017
 
 if exists("b:did_indent")
   finish
@@ -27,9 +27,9 @@ let s:section_run = '\v%(^|;)\s*run\s*;'
 let s:section_end = '\v%(^|;)\s*%(quit|enddata)\s*;'
 
 " Regex that captures the start of a control block (anything inside a section)
-let s:block_str = '\v<%(do>%([^;]+<%(to|over)>[^;]+)=|%(define|layout|method|select)>[^;]+|begingraph);'
+let s:block_str = '\v<%(do>%([^;]+<%(to|over)>[^;]+)=|%(define|layout|method|select)>[^;]+|begingraph)\s*;'
 " Regex that captures the end of a control block (anything inside a section)
-let s:block_end = '\v%(^|;)\s*%(end|endlayout|endgraph)\s*;'
+let s:block_end = '\v<%(end|endlayout|endgraph)\s*;'
 
 " Regex that captures the start of a macro
 let s:macro_str = '\v%(^|;)\s*\%macro>'
@@ -51,7 +51,8 @@ let s:run_processing_procs = [
 function! s:PrevMatch(lnum, regex)
   let prev_lnum = prevnonblank(a:lnum - 1)
   while prev_lnum > 0
-    if getline(prev_lnum) =~ a:regex
+    let prev_line = getline(prev_lnum)
+    if prev_line =~ a:regex
       break
     else
       let prev_lnum = prevnonblank(prev_lnum - 1)
