@@ -1,5 +1,10 @@
+" Vim filetype plugin file
+" Language:	SAS
+" Maintainer:	Zhen-Huan Hu <wildkeny@gmail.com>
+" Last Change:	Mar 14, 2017
+
 " Only do this when not done yet for this buffer
-if (exists("b:did_ftplugin"))
+if exists('b:did_ftplugin')
   finish
 endif
 let b:did_ftplugin = 1
@@ -9,8 +14,10 @@ set cpo&vim
 
 " Local settings
 setlocal softtabstop=2 shiftwidth=2 expandtab conceallevel=3
+setlocal textwidth=80 formatoptions=croq
+setlocal comments=sr:/*,mb:*,ex:*/ commentstring=/*%s*/
 setlocal hidden omnifunc=sascomplete#Complete
-setlocal cms=/*%s*/ makeprg=sas\ -noverbose\ -sysin\ '%:p'
+setlocal makeprg=sas\ -noverbose\ -sysin\ '%:p'
 
 " Find autoexec files from $PATH
 for syspath in split(expand('$PATH'), has('win32') ? ';' : ':')
@@ -64,7 +71,7 @@ function! s:SwitchSASBuffer(dest, readwrite)
 endfunction
 
 function! s:RunSAS()
-  w
+  update
   silent make
   if v:shell_error ==# 0
     echo 'All steps terminated normally'
@@ -72,8 +79,8 @@ function! s:RunSAS()
     if filereadable(expand('%<') . '.log')
       let nw = 0 | let ne = 0
       for logline in readfile(expand('%<') . '.log')
-        if logline =~ '^WARNING' | let nw += 1
-        elseif logline =~ '^ERROR' | let ne += 1 | endif
+        if logline =~# '^WARNING' | let nw += 1
+        elseif logline =~# '^ERROR' | let ne += 1 | endif
       endfor
       if nw > 0 && ne == 0
         echoh WarningMsg | echo 'SAS System issued ' . nw . ' warning(s)' | echoh None

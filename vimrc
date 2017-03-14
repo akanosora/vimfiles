@@ -35,7 +35,7 @@ set backspace=indent,eol,start whichwrap+=<,>,[,]
 fixdel
 
 " Indent and wrap
-set wrap
+set wrap formatoptions+=cro
 set autoindent softtabstop=2 shiftwidth=2 expandtab
 let &showbreak = "\u2192"
 if version > 704

@@ -8,9 +8,9 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 " Local settings
-setlocal textwidth=80 colorcolumn=81 formatoptions+=t
+setlocal textwidth=80 colorcolumn=81 formatoptions+=tcroq
+setlocal commentstring=<!--%s-->
 setlocal spell spelllang=en_us
-setlocal cms=<!--%s-->
 
 " Set comment toggle
 nnoremap <buffer> <silent> <F5> :call keny#ToggleComments()<CR>
