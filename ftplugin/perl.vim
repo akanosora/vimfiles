@@ -8,7 +8,7 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 " Local settings
-setlocal cms=#%s
+setlocal comments=nb:# commentstring=#%s
 
 " Set compiler
 nnoremap <buffer> <silent> <F8> :w !perl<CR>
