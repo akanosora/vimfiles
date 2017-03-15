@@ -13,11 +13,12 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 " Local settings
-setlocal softtabstop=2 shiftwidth=2 expandtab conceallevel=3
+setlocal softtabstop=2 shiftwidth=2 expandtab
 setlocal textwidth=80 formatoptions=croq
 setlocal comments=sr:/*,mb:*,ex:*/ commentstring=/*%s*/
 setlocal omnifunc=sascomplete#Complete
 setlocal makeprg=sas\ -noverbose\ -sysin\ '%:p'
+setlocal hidden
 
 " Find autoexec files from $PATH
 for syspath in split(expand('$PATH'), has('win32') ? ';' : ':')
@@ -27,11 +28,11 @@ for syspath in split(expand('$PATH'), has('win32') ? ';' : ':')
 endfor
 
 " Restore view
-augroup SASView
-  autocmd!
-  au BufWinEnter *.sas silent loadview
-  au BufWritePost,BufLeave,WinLeave *.sas mkview
-augroup END
+" augroup SASView
+"   autocmd!
+"   au BufWinEnter *.sas silent loadview
+"   au BufWritePost,BufLeave,WinLeave *.sas mkview
+" augroup END
 
 " Key mappings
 nnoremap <buffer> <silent> <F2> :call <SID>SwitchSASBuffer('sas', 1)<CR>
