@@ -16,7 +16,7 @@ set cpo&vim
 setlocal softtabstop=2 shiftwidth=2 expandtab conceallevel=3
 setlocal textwidth=80 formatoptions=croq
 setlocal comments=sr:/*,mb:*,ex:*/ commentstring=/*%s*/
-setlocal hidden omnifunc=sascomplete#Complete
+setlocal omnifunc=sascomplete#Complete
 setlocal makeprg=sas\ -noverbose\ -sysin\ '%:p'
 
 " Find autoexec files from $PATH
