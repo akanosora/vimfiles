@@ -70,10 +70,6 @@ nnoremap <leader>qq :q<CR>
 nnoremap <leader>tn :tabnew<CR>
 nnoremap <leader>to :tabonly<CR>
 nnoremap <leader>tc :tabclose<CR>
-nnoremap <leader>vb <C-v>
-nnoremap <leader>vl V
-nnoremap <leader>vw viw
-nnoremap <leader>vp vip
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
 nnoremap <leader>fi mzgg=G`z
 nnoremap <leader>sc :setlocal spell!<CR>
