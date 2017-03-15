@@ -174,9 +174,9 @@ an <silent> Edit.Convert.Convert\ Encoding\ to\ UTF-16    :setlocal fenc=utf-16<
 " Popup menu
 an PopUp.-KSEP0-                                          <Nop>
 if has('gui_macvim')
-  an <silent> PopUp.Open\ Containing\ Folder              :if expand('%:p:h') != '' \| exec '!start open' expand('%:p:h:S') \| endif<CR>
+  an <silent> PopUp.Open\ Containing\ Folder              :if expand('%:p:h') != '' \| silent exec '!start open' expand('%:p:h:S') \| endif<CR>
 elseif has('gui_win32')
-  an <silent> PopUp.Open\ Containing\ Folder              :if expand('%:p:h') != '' \| exec '!start explorer.exe' expand('%:p:h:S') \| endif<CR>
+  an <silent> PopUp.Open\ Containing\ Folder              :if expand('%:p:h') != '' \| silent exec '!start explorer.exe' expand('%:p:h:S') \| endif<CR>
 endif
 
 nnoremenu PopUp.-KSEP1-                                   <Nop>
