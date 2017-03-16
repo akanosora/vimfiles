@@ -29,10 +29,10 @@ endfor
 
 " Change the browse dialog on Win32 to show mainly Perl-related files
 if has('gui_win32')
-  let b:browsefilter = 'SAS Source Files (*.sas)\t*.sas\n' .
-        \ 'SAS Log Files (*.log)\t*.log\n' .
-        \ 'SAS Output Files (*.lst)\t*.lst\n' .
-        \ 'All Files (*.*)\t*.*\n'
+  let b:browsefilter = "SAS Source Files (*.sas)\t*.sas\n" .
+        \ "SAS Log Files (*.log)\t*.log\n" .
+        \ "SAS Output Files (*.lst)\t*.lst\n" .
+        \ "All Files (*.*)\t*.*\n"
 endif
 
 " Restore view
