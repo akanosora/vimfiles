@@ -43,13 +43,13 @@ endif
 " augroup END
 
 " Key mappings
-nnoremap <buffer> <silent> ]] :call <SID>JumpSASCode('n', '\v%$|^(data|proc)>', 'W')<CR>
-onoremap <buffer> <silent> ]] :call <SID>JumpSASCode('o', '\v%$|^(data|proc)>', 'W')<CR>
-xnoremap <buffer> <silent> ]] :call <SID>JumpSASCode('x', '\v%$|^(data|proc)>', 'W')<CR>
+nnoremap <buffer> <silent> ]] :call <SID>JumpSASCode('n', '\v%$\|^(data\|proc)>', 'W')<CR>
+onoremap <buffer> <silent> ]] :call <SID>JumpSASCode('o', '\v%$\|^(data\|proc)>', 'W')<CR>
+xnoremap <buffer> <silent> ]] :call <SID>JumpSASCode('x', '\v%$\|^(data\|proc)>', 'W')<CR>
 
-nnoremap <buffer> <silent> [[ :call <SID>JumpSASCode('n', '\v^(data|proc)>', 'Wb')<CR>
-onoremap <buffer> <silent> [[ :call <SID>JumpSASCode('o', '\v^(data|proc)>', 'Wb')<CR>
-xnoremap <buffer> <silent> [[ :call <SID>JumpSASCode('x', '\v^(data|proc)>', 'Wb')<CR>
+nnoremap <buffer> <silent> [[ :call <SID>JumpSASCode('n', '\v^(data\|proc)>', 'Wb')<CR>
+onoremap <buffer> <silent> [[ :call <SID>JumpSASCode('o', '\v^(data\|proc)>', 'Wb')<CR>
+xnoremap <buffer> <silent> [[ :call <SID>JumpSASCode('x', '\v^(data\|proc)>', 'Wb')<CR>
 
 nnoremap <buffer> <silent> <F2> :call <SID>SwitchSASBuffer('sas', 1)<CR>
 vnoremap <buffer> <silent> <F2> <C-c>:call <SID>SwitchSASBuffer('sas', 1)<CR>
