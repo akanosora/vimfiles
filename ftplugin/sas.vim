@@ -27,6 +27,14 @@ for syspath in split(expand('$PATH'), has('win32') ? ';' : ':')
   endif
 endfor
 
+" Change the browse dialog on Win32 to show mainly Perl-related files
+if has('gui_win32')
+  let b:browsefilter = 'SAS Source Files (*.sas)\t*.sas\n' .
+        \ 'SAS Log Files (*.log)\t*.log\n' .
+        \ 'SAS Output Files (*.lst)\t*.lst\n' .
+        \ 'All Files (*.*)\t*.*\n'
+endif
+
 " Restore view
 " augroup SASView
 "   autocmd!
@@ -35,6 +43,14 @@ endfor
 " augroup END
 
 " Key mappings
+nnoremap <buffer> <silent> ]] :call <SID>JumpSASCode('n', '\v%$|^(data|proc)>', 'W')<CR>
+onoremap <buffer> <silent> ]] :call <SID>JumpSASCode('o', '\v%$|^(data|proc)>', 'W')<CR>
+xnoremap <buffer> <silent> ]] :call <SID>JumpSASCode('x', '\v%$|^(data|proc)>', 'W')<CR>
+
+nnoremap <buffer> <silent> [[ :call <SID>JumpSASCode('n', '\v^(data|proc)>', 'Wb')<CR>
+onoremap <buffer> <silent> [[ :call <SID>JumpSASCode('o', '\v^(data|proc)>', 'Wb')<CR>
+xnoremap <buffer> <silent> [[ :call <SID>JumpSASCode('x', '\v^(data|proc)>', 'Wb')<CR>
+
 nnoremap <buffer> <silent> <F2> :call <SID>SwitchSASBuffer('sas', 1)<CR>
 vnoremap <buffer> <silent> <F2> <C-c>:call <SID>SwitchSASBuffer('sas', 1)<CR>
 inoremap <buffer> <silent> <F2> <Esc>:call <SID>SwitchSASBuffer('sas', 1)<CR>
@@ -61,14 +77,18 @@ cnoremap <buffer> <silent> <F5> <C-c>:call keny#ToggleComments()<CR>
 onoremap <buffer> <silent> <F5> <C-c>:call keny#ToggleComments()<CR>
 
 " Local functions
-function! s:SwitchSASBuffer(dest, readwrite)
-  if expand('%:e') ==# a:dest | return | endif
-  let to_buffer = substitute(bufname('%'), expand('%:e') . '$', a:dest, '')
-  if bufnr(to_buffer) >= 0
-    silent execute 'buffer' bufnr(to_buffer)
-  elseif filereadable(expand('%<') . '.' . a:dest)
-    silent execute (a:readwrite ? 'edit' : 'view') fnameescape(expand('%<') . '.' . a:dest)
+function! s:JumpSASCode(mode, motion, flags) range
+  if a:mode == 'x'
+    normal! gv
   endif
+  normal! 0
+  let cnt = v:count1
+  mark '
+  while cnt > 0
+    call search(a:motion, a:flags)
+    let cnt = cnt - 1
+  endwhile
+  normal! ^
 endfunction
 
 function! s:RunSAS()
@@ -105,6 +125,16 @@ function! s:RunSAS()
     echoh ErrorMsg | echo 'SAS internal error' | echoh None
   else
     echo 'Exit status code: ' . v:shell_error
+  endif
+endfunction
+
+function! s:SwitchSASBuffer(dest, rw)
+  if expand('%:e') ==# a:dest | return | endif
+  let to_buffer = substitute(bufname('%'), expand('%:e') . '$', a:dest, '')
+  if bufnr(to_buffer) >= 0
+    silent execute 'buffer' bufnr(to_buffer)
+  elseif filereadable(expand('%<') . '.' . a:dest)
+    silent execute (a:rw ? 'edit' : 'view') fnameescape(expand('%<') . '.' . a:dest)
   endif
 endfunction
 
