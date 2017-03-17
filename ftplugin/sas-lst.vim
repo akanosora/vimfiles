@@ -16,6 +16,14 @@ if has('gui_win32')
 endif
 
 " Key mappings
+nnoremap <buffer> <silent> ]] :call <SID>JumpSASCode('n', '\v%$\|', 'W')<CR>
+onoremap <buffer> <silent> ]] :call <SID>JumpSASCode('o', '\v%$\|', 'W')<CR>
+xnoremap <buffer> <silent> ]] :call <SID>JumpSASCode('x', '\v%$\|', 'W')<CR>
+
+nnoremap <buffer> <silent> [[ :call <SID>JumpSASCode('n', '\v%^\|', 'Wb')<CR>
+onoremap <buffer> <silent> [[ :call <SID>JumpSASCode('o', '\v%^\|', 'Wb')<CR>
+xnoremap <buffer> <silent> [[ :call <SID>JumpSASCode('x', '\v%^\|', 'Wb')<CR>
+
 nnoremap <buffer> <silent> <F2> :call <SID>SwitchSASBuffer('sas', 1)<CR>
 vnoremap <buffer> <silent> <F2> <C-c>:call <SID>SwitchSASBuffer('sas', 1)<CR>
 inoremap <buffer> <silent> <F2> <Esc>:call <SID>SwitchSASBuffer('sas', 1)<CR>
@@ -29,6 +37,20 @@ vnoremap <buffer> <silent> <F4> <C-c>:call <SID>SwitchSASBuffer('lst', 0)<CR>
 inoremap <buffer> <silent> <F4> <Esc>:call <SID>SwitchSASBuffer('lst', 0)<CR>
 
 " Local functions
+function! s:JumpSASCode(mode, motion, flags) range
+  if a:mode == 'x'
+    normal! gv
+  endif
+  normal! 0
+  let cnt = v:count1
+  mark '
+  while cnt > 0
+    call search(a:motion, a:flags)
+    let cnt = cnt - 1
+  endwhile
+  normal! ^
+endfunction
+
 function! s:SwitchSASBuffer(dest, rw)
   if expand('%:e') ==# a:dest | return | endif
   let to_buffer = substitute(bufname('%'), expand('%:e') . '$', a:dest, '')
