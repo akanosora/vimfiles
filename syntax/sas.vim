@@ -1,6 +1,7 @@
 " Vim syntax file
 " Language:     SAS
 " Maintainer:   Zhen-Huan Hu <wildkeny@gmail.com>
+" Original Maintainer: James Kidd <james.kidd@covance.com>
 " Version:      3.0.0
 " Last Change:  Mar 10, 2017
 "
