@@ -15,6 +15,16 @@ snippet tedconsent
 snippet crfconsent
 	if yeartx <= 2007 and sgirbres = 0 then delete; 
 	else if yeartx > 2007 and (sgirbres <= 0 or sgirbres = 3) then delete;
+snippet formrecv
+	if formrecv = 1 or
+	(h2000frmtx = 1 and h2100frmtx = 1 and (
+	(disease =  10 and h2010amltx = 1 and h2110amltx = 1) or
+	(disease =  20 and h2011alltx = 1 and h2111alltx = 1) or
+	(disease =  40 and h2012cmltx = 1 and h2112cmltx = 1) or
+	(disease =  50 and h2014mdstx = 1 and h2114mdstx = 1) or
+	(disease = 100 and h2018lymtx = 1 and h2118lymtx = 1) or
+	(disease = 150 and h2018lymtx = 1 and h2118lymtx = 1)
+	));
 snippet pkeep
 	call streaminit(86409);
 	pkeepfloor = rand("Uniform");
