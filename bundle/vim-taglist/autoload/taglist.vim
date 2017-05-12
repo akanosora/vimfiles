@@ -93,13 +93,6 @@ let s:tlist_def_settings = {
       \ 'slang'     : 'slang;n:namespace;f:function;',
       \ 'sml'       : 'sml;e:exception;c:functor;s:signature;' .
       \               'r:structure;t:type;v:value;c:functor;f:function;',
-      \ 'sql'       : 'sql;f:functions;' .
-      \               'P:packages;p:procedures;t:tables;T:triggers;' .
-      \               'v:variables;e:events;U:publications;R:services;' .
-      \               'D:domains;x:MLTableScripts;y:MLConnScripts;z:MLProperties;'.
-      \               'i:indexes;c:cursors;V:views;d:prototypes;'.
-      \               'l:local variables;F:record fields;'.
-      \               'L:block label;r:records;s:subtypes;',
       \ 'tcl'       : 'tcl;c:class;f:method;m:method;p:procedure;',
       \ 'expect'    : 'tcl;c:class;f:method;p:procedure;',
       \ 'tex'       : 'tex;c:chapters;s:sections;u:subsections;'.
