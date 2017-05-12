@@ -1,7 +1,7 @@
 " Vim filetype plugin file
 " Language:	SAS
 " Maintainer:	Zhen-Huan Hu <wildkeny@gmail.com>
-" Last Change:	Mar 14, 2017
+" Last Change:	May 12, 2017
 
 " Only do this when not done yet for this buffer
 if exists('b:did_ftplugin')
@@ -76,7 +76,31 @@ inoremap <buffer> <silent> <F5> <C-o>:call keny#ToggleComments()<CR>
 cnoremap <buffer> <silent> <F5> <C-c>:call keny#ToggleComments()<CR>
 onoremap <buffer> <silent> <F5> <C-c>:call keny#ToggleComments()<CR>
 
+nnoremap <buffer> <silent> <S-F5> :call <SID>ToggleSASComments()<CR>
+vnoremap <buffer> <silent> <S-F5> :call <SID>ToggleSASComments()<CR>
+inoremap <buffer> <silent> <S-F5> <C-o>:call <SID>ToggleSASComments()<CR>
+cnoremap <buffer> <silent> <S-F5> <C-c>:call <SID>ToggleSASComments()<CR>
+onoremap <buffer> <silent> <S-F5> <C-c>:call <SID>ToggleSASComments()<CR>
+
 " Local functions
+function! s:ToggleSASComments()
+  if getline('.') !~# '^\s*$'
+    " Save the value of last search register
+    let saved_last_search_pattern = @/
+    silent exec 's/;\s\+$/;/e'
+    if getline('.') =~# '^\* '
+      silent exec 's/\(^\|; \)\* /\1/ge'
+    else
+      silent exec 's/\(^\|; \)/\1* /ge'
+    endif
+    " Restore the value of last search register
+    " and thus remove highlighting of whitespaces
+    let @/ = saved_last_search_pattern
+  endif
+  " Move cursor to the next line
+  silent exec 'normal! +'
+endfunction
+
 function! s:JumpSASCode(mode, motion, flags) range
   if a:mode == 'x'
     normal! gv
