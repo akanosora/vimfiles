@@ -51,7 +51,7 @@ fu! s:SetColor(name, fg, bg, ...)
     execute "hi" a:name
           \ "ctermfg=" . fg[1]
           \ "ctermbg=" . bg[1]
-          \ "cterm=" . (a:0 > 0 ? a:1 : "NONE")
+          \ "cterm=NONE"
   endif
 endf
 
@@ -67,7 +67,7 @@ fu! s:SetFgColor(name, fg, ...)
   if &t_Co == 256
     execute "hi" a:name
           \ "ctermfg=" . fg[1]
-          \ "cterm=" . (a:0 > 0 ? a:1 : "NONE")
+          \ "cterm=NONE"
   endif
 endf
 
@@ -83,7 +83,7 @@ fu! s:SetBgColor(name, bg, ...)
   if &t_Co == 256
     execute "hi" a:name
           \ "ctermbg=" . bg[1]
-          \ "cterm=" . (a:0 > 0 ? a:1 : "NONE")
+          \ "cterm=NONE"
   endif
 endf
 
