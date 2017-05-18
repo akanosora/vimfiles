@@ -169,6 +169,15 @@ let g:delimitMate_expand_cr = 0
 let g:tlist_auto_highlight_tag = 1
 let g:tlist_auto_update = 1
 let g:tlist_show_menu = 1
+
+" Configure dbext
+let g:dbext_default_profile_rdb = 'type=ORA:user=zhu:passwd=kenny#418hu:srvname=IBMTPRD'
+let g:dbext_default_profile = 'rdb'
+
+" Configure sqlplus
+let g:sqlplus_userid = 'zhu'
+let g:sqlplus_passwd = 'kenny#418hu'
+let g:sqlplus_db = 'IBMTPRD'
 " }}}
 
 " vim:foldmethod=marker:foldlevel=0
