@@ -173,6 +173,11 @@ let g:tlist_show_menu = 1
 " Configure dbext
 let g:dbext_default_profile_rdb = 'type=ORA:user=zhu:passwd=kenny#418hu:srvname=IBMTPRD'
 let g:dbext_default_profile = 'rdb'
+if has('unix')
+  let g:dbext_default_history_file = $HOME . '/.dbext_hist'
+elseif has('win32')
+  let g:dbext_default_history_file = $HOME . '/_dbext_hist'
+endif
 
 " Configure sqlplus
 let g:sqlplus_userid = 'zhu'
