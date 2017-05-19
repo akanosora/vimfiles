@@ -12,9 +12,9 @@ setlocal cms=--%s
 setlocal omnifunc=sqlcomplete#Complete
 
 " Set comment toggle
-nnoremap <buffer> <silent> <F3> :call <SID>SwitchBuffer('log', 0)<CR>
-vnoremap <buffer> <silent> <F3> <C-c>:call <SID>SwitchBuffer('log', 0)<CR>
-inoremap <buffer> <silent> <F3> <Esc>:call <SID>SwitchBuffer('log', 0)<CR>
+nnoremap <buffer> <silent> <F4> :call <SID>SwitchBuffer('log', 0)<CR>
+vnoremap <buffer> <silent> <F4> <C-c>:call <SID>SwitchBuffer('log', 0)<CR>
+inoremap <buffer> <silent> <F4> <Esc>:call <SID>SwitchBuffer('log', 0)<CR>
 
 nnoremap <buffer> <silent> <F5> :call keny#ToggleComments()<CR>
 vnoremap <buffer> <silent> <F5> :call keny#ToggleComments()<CR>
