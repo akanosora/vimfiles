@@ -28,7 +28,7 @@ endif
 
 " User Interface {{{
 set number foldcolumn=3 foldlevelstart=3 ruler laststatus=2
-set showcmd showmode wildmenu
+set showtabline=2 noshowmode showcmd wildmenu
 
 " Backspace
 set backspace=indent,eol,start whichwrap+=<,>,[,]
@@ -153,6 +153,38 @@ let g:airline#extensions#wordcount#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_left_sep = ' >>> '
 let g:airline_right_sep = ' <<< '
+
+" Configure vim-lightline
+let g:lightline = {
+      \ 'colorscheme': 'afterglow',
+      \ 'enable': { 'statusline': 1, 'tabline': 1 },
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \           [ 'readonly', 'filename', 'modified' ] ],
+      \   'right': [ [ 'percent', 'lineinfo' ],
+      \            [ 'fileproperty' ],
+      \            [ 'filetype' ] ] },
+      \ 'inactive': {
+      \   'left': [ [ 'filename' ] ],
+      \   'right': [ [ 'percent', 'lineinfo' ] ] },
+      \ 'tabline': {
+      \   'left': [ [ 'tabs' ],
+      \           [ 'buffers' ] ],
+      \   'right': [ [ 'close' ] ] },
+      \ 'tab': {
+      \   'active': [ 'tabnum' ],
+      \   'inactive': [ 'tabnum' ] },
+      \ 'component': {
+      \   'fileproperty': '%{&fenc!=#""?&fenc:&enc}[%{&ff}]',
+      \   'close': "%999X \u00d7 " },
+      \ 'component_expand': { 'buffers': 'lightline#bufferline#buffers' },
+      \ 'component_type': { 'buffers': 'tabsel' },
+      \ 'separator': { 'left': ' >>> ', 'right': ' <<< ' },
+      \ 'tabline_separator': { 'left': '', 'right': ' <<< ' },
+      \ 'subseparator': { 'left': '', 'right': '' },
+      \ }
+
+let g:lightline#bufferline#unnamed = '[No Name]'
 
 " Configure ctrlp
 if has('unix')
