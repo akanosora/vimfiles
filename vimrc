@@ -161,12 +161,12 @@ let g:lightline = {
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \           [ 'readonly', 'filename', 'modified' ] ],
-      \   'right': [ [ 'percent', 'lineinfo' ],
+      \   'right': [ [ 'percent', 'cursorpos' ],
       \            [ 'fileproperty' ],
       \            [ 'filetype' ] ] },
       \ 'inactive': {
       \   'left': [ [ 'filename' ] ],
-      \   'right': [ [ 'percent', 'lineinfo' ] ] },
+      \   'right': [ [ 'percent', 'cursorpos' ] ] },
       \ 'tabline': {
       \   'left': [ [ 'tabs' ],
       \           [ 'buffers' ] ],
@@ -175,6 +175,7 @@ let g:lightline = {
       \   'active': [ 'tabnum' ],
       \   'inactive': [ 'tabnum' ] },
       \ 'component': {
+      \   'cursorpos': '%3l/%L:%-2v',
       \   'fileproperty': '%{&fenc!=#""?&fenc:&enc}[%{&ff}]',
       \   'close': "%999X \u00d7 " },
       \ 'component_expand': { 'buffers': 'lightline#bufferline#buffers' },
