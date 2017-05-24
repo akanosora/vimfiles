@@ -155,9 +155,9 @@ function! s:SwitchSASBuffer(dest, rw)
   if expand('%:e') ==# a:dest | return | endif
   let to_buffer = substitute(bufname('%'), expand('%:e') . '$', a:dest, '')
   if bufnr(to_buffer) >= 0
-    silent execute 'buffer' bufnr(to_buffer)
+    silent execute 'hide buffer' bufnr(to_buffer)
   elseif filereadable(expand('%<') . '.' . a:dest)
-    silent execute (a:rw ? 'edit' : 'view') fnameescape(expand('%<') . '.' . a:dest)
+    silent execute (a:rw ? 'hide edit' : 'hide view') fnameescape(expand('%<') . '.' . a:dest)
   endif
 endfunction
 

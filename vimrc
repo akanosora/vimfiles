@@ -1,5 +1,5 @@
 " Maintainer: Zhenhuan Hu <zhu@mcw.edu>
-" Version: 2017-02-03
+" Version: May 24, 2017
 
 " General {{{
 " Enable filetype plugins
