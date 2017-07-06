@@ -179,7 +179,8 @@ if has('gui_macvim')
 elseif has('gui_win32')
   an <silent> PopUp.Open\ Containing\ Folder              :if expand('%:p:h') != '' \| silent exec '!start explorer.exe' expand('%:p:h:S') \| endif<CR>
 endif
-an <silent> PopUp.Copy\ Current\ Path\ to\ Clipboard      :let @+ = expand('%:p')<CR>
+an <silent> PopUp.Copy\ Current\ Path\ to\ Clipboard      :let @+ = expand('%:p:h')<CR>
+an <silent> PopUp.Copy\ Current\ Filename\ to\ Clipboard  :let @+ = expand('%:p')<CR>
 
 nnoremenu PopUp.-KSEP1-                                   <Nop>
 nnoremenu <silent> PopUp.Current\ Filename                "=expand('%')<CR>P
