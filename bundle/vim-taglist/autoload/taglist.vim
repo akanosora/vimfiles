@@ -877,6 +877,10 @@ function! s:ParseTagLine(tag_line, fname, ftype)
   if a:tag_line == ''
     " Skip empty lines
     return 0
+  elseif a:tag_line =~ '^ctags\.exe: Warning:'
+    " Log warning messages
+    call s:WarningMsg(a:tag_line)
+    return 0
   endif
   " Divide the tag line into parts
   let tag_line_parts = split(a:tag_line, "\t")
