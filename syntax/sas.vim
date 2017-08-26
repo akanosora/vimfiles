@@ -120,7 +120,7 @@ syn match sasDataStepStatement '\v%(^|;)\s*\zs%(dcl|declare)>' display contained
 syn match sasDataStepStatement '\v%(^|;)\s*\zsods>' display contained contains=sasGlobalStatementKeyword nextgroup=sasGlobalStatementODSKeyword skipwhite skipnl skipempty
 syn match sasDataStepStatement '\v%(^|;)\s*\zs%(format|informat|input|put)>' display contained contains=sasDataStepStatementKeyword nextgroup=sasFormatContext skipwhite skipnl skipempty
 syn match sasDataStepStatement '\v%(^|;)\s*\zs%(cards|datalines|lines)4=\s*;' display contained contains=sasDataStepStatementKeyword nextgroup=sasDataLine skipwhite skipnl skipempty
-syn region sasDataLine start='^' end='^;'me=s-1 contained
+syn region sasDataLine start='^' end='^\s*;'me=s-1 contained
 syn region sasDataStep matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsdata>' end='\v%(^|;)\s*%(run|data|proc|endsas)>'me=s-1 fold contains=@sasBasicSyntax,@sasDataStepSyntax
 syn cluster sasDataStepSyntax contains=sasDataStepFunction,sasDataStepHashOperator,sasDataStepHashAttribute,sasDataStepHashMethod,sasDataStepControl,sasDataStepStatement
 
