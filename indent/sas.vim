@@ -27,9 +27,9 @@ let s:section_run = '\v%(^|;)\s*run\s*;'
 let s:section_end = '\v%(^|;)\s*%(quit|enddata)\s*;'
 
 " Regex that captures the start of a control block (anything inside a section)
-let s:block_str = '\v<%(do>%([^;]+<%(to|over)>[^;]+)=|%(define|layout|method|select)>[^;]+|begingraph)\s*;'
+let s:block_str = '\v<%(do>%([^;]+<%(to|over)>[^;]+)=|%(define|layout|compute|method|select)>[^;]+|begingraph)\s*;'
 " Regex that captures the end of a control block (anything inside a section)
-let s:block_end = '\v<%(end|endlayout|endgraph)\s*;'
+let s:block_end = '\v<%(end|endlayout|endcomp|endgraph)\s*;'
 
 " Regex that captures the start of a macro
 let s:macro_str = '\v%(^|;)\s*\%macro>'
