@@ -40,7 +40,7 @@ snippet mds
 	else if blbldx >= 20 or blblpr >= 20 then delete; * AML per Wael;
 snippet mps
 	* 57: polycythemia vera | 58: essential/primary thrombocythemia
-	* 59: myelofibrosis (legacy) | 160: myelofibrosis (ver. 1) | 167: myelofibrosis (ver. 3).
+	* 59: myelofibrosis (legacy) | 160: myelofibrosis (ver. 1) | 167: myelofibrosis (ver. 3);
 	if fabdx not in (57: 59, 160, 167) then delete;
 	else if fabdx in (57, 58) and fabpr not in (59, 160, 167) then delete; * Post-PV, ET;
 	else if fabtrans > 0 and fabpr not in (59, 160, 167) then delete;
