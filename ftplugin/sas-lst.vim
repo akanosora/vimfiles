@@ -7,6 +7,9 @@ let b:did_ftplugin = 1
 let s:cpo_save = &cpo
 set cpo&vim
 
+" Local settings
+setlocal nowrap
+
 " Change the browse dialog on Win32 to show mainly Perl-related files
 if has('gui_win32')
   let b:browsefilter = "SAS Source Files (*.sas)\t*.sas\n" .
