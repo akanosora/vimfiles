@@ -64,7 +64,7 @@ syn case ignore
 
 " Basic SAS syntaxes
 syn keyword sasOperator and eq ge gt in le lt ne not of or
-syn keyword sasReserved _all_ _automatic_ _char_ _character_ _data_ _infile_ _last_ _n_ _name_ _null_ _num_ _numeric_ _temporary_ _user_ _webout_
+syn keyword sasReserved _all_ _automatic_ _char_ _character_ _data_ _infile_ _label_ _last_ _n_ _name_ _null_ _num_ _numeric_ _temporary_ _user_ _webout_
 " Strings
 syn region sasString start=+'+ skip=+''+ end=+'+ contains=@Spell
 syn region sasString start=+"+ skip=+""+ end=+"+ contains=sasMacroVariable,@Spell
