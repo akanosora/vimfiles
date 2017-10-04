@@ -29,7 +29,7 @@ snippet pkeep
 	call streaminit(86409);
 	pkeepfloor = rand("Uniform");
 	if assignby = 4 and yeartx <= 2002
-	and pkeepfloor >= pkeep then delete;	
+	and pkeepfloor >= pkeep >= 0 then delete;	
 snippet mds
 	* 50: MDS, unclassified | 51: RA | 52: RAEB | 54: CMML | 55: RARS
 	* 61: RAEB-1 | 62: RAEB-2 | 64: RCMD | 65: RCMD/RS | 66: 5q- syndrome
@@ -151,8 +151,14 @@ snippet ods MS Word
 snippet ods Excel
 	ods tagsets.excelxp file = "${1}" style = kenyxls
 	options(frozen_rowheaders = "1" frozen_headers = "1");${2}
+snippet ods Graphics
+	ods listing style = kenyplot sge = on;
+	ods graphics on / reset = all imagename = "${1:figure}" width = ${2:800px} height = ${3:600px} imagefmt = ${4:png};${5}
 snippet endods MS Word
 	ods rtf close;
 snippet endods Excel
 	ods tagsets.excelxp close;
+snippet endods Graphics
+	ods graphics off;
+	ods listing sge = off;
 
