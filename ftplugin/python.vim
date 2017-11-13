@@ -10,6 +10,7 @@ set cpo&vim
 " Local settings
 setlocal softtabstop=4 shiftwidth=4 expandtab
 setlocal comments=nb:#,fb:- commentstring=#%s
+setlocal omnifunc=pythoncomplete#Complete
 
 " Set compiler
 setlocal makeprg=python
