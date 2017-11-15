@@ -9,6 +9,7 @@ set cpo&vim
 
 " Local settings
 setlocal softtabstop=4 shiftwidth=4 expandtab
+setlocal textwidth=80 colorcolumn=81
 setlocal comments=nb:#,fb:- commentstring=#%s
 setlocal omnifunc=pythoncomplete#Complete
 
