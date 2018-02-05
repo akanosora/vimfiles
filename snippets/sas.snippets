@@ -2,10 +2,10 @@ snippet pre
 	options nodate nonotes pagesize = max dkricond = warn
 	fmtsearch = (self, export, allo, ted);
 	
-	%include macro(std style yeartxgp dnrinfo racegp
-	ipss condint gvhdgp cytoinfo treatpr celldose sorror
-	relapse acgvhd engraftment report appendix lifetest
-	lifetestplot check dictmcr selection);
+	%include macro(std style yeartxgp dnrinfo racegp2
+	discore condint gvhdgp cytoinfo treatpr celldose sorror
+	relapse acgvhd recovery report appendix lifetest-new
+	lifetestplot-new check dictmcr selection);
 	
 	options notes mprint /* mlogic */ symbolgen;
 snippet tedconsent
@@ -68,11 +68,28 @@ snippet kps
 		if 90 <= kpspr <= 100 then karnofcat = 1;
 		else if kpspr >= 10 or kpspr = 2 then karnofcat = 2;
 	end;
+snippet disgrp
+	* Disease;
+	if disease = 10 then disgrp = 1; * AML;
+	else if disease = 20 then disgrp = 2; * ALL;
+	else if disease = 40 then disgrp = 3; * CML;
+	else if disease = 30 and subdis1 in (34, 71, 72) then disgrp = 4; * CLL;
+	else if disease = 50 and subdis1 in (50: 52, 54, 55, 61, 62, 64: 67) then disgrp = 5; * MDS;
+	else if disease in (30, 80) then disgrp = 6; * Other LK;
+	else if disease = 100 then disgrp = 7; * NHL;
+	else if disease = 150 then disgrp = 8; * HL;
+	else if disease = 170 and subdis1 in (171, 181: 188) then disgrp = 9; * MM;
+	else if disease < 300 then disgrp = 10; * Other malig dis;
+	else if disease = 300 then disgrp = 11; * SAA;
+	else if disease <= 900 then disgrp = 12; * Other non-malig dis;
 snippet graft
 	* Graft source;
 	if graftype = 1 then graftypecat = 1; * Bone marrow;
 	else if graftype in (22, 30) then graftypecat = 2; * Peripheral blood;
 	else if graftype in (23, 31, 33) then graftypecat = 3; * Cord blood;
+snippet rcmvpr
+	* Recipient CMV status;
+	if rcmvpr not in (0, 1) then call missing(rcmvpr);
 snippet other
 	ods tagsets.excelxp file = "condregi.xls" style = kenyxls
 	options(frozen_rowheaders = "1" frozen_headers = "1");
