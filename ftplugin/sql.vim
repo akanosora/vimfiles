@@ -8,6 +8,7 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 " Local settings
+setlocal softtabstop=4 shiftwidth=4 expandtab
 setlocal cms=--%s
 setlocal omnifunc=sqlcomplete#Complete
 
