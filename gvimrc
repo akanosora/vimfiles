@@ -2,7 +2,7 @@
 " Version: May 24, 2017
 
 " User Interface {{{
-set guioptions-=T guioptions-=e
+set guioptions-=T guioptions-=e guioptions+=b
 set lines=60 columns=150
 
 " Set fonts
