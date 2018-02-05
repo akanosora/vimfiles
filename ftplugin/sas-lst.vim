@@ -8,7 +8,7 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 " Local settings
-setlocal nowrap
+setlocal nowrap cursorline
 
 " Change the browse dialog on Win32 to show mainly Perl-related files
 if has('gui_win32')
