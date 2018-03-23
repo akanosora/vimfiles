@@ -16,15 +16,14 @@ snippet crfconsent
 	if yeartx <= 2007 and sgirbres = 0 then delete; 
 	else if yeartx > 2007 and (sgirbres <= 0 or sgirbres = 3) then delete;
 snippet formrecv
-	if formrecv = 1 or
-	(h2000frmtx = 1 and h2100frmtx = 1 and (
-	(disease =  10 and h2010amltx = 1 and h2110amltx = 1) or
-	(disease =  20 and h2011alltx = 1 and h2111alltx = 1) or
-	(disease =  40 and h2012cmltx = 1 and h2112cmltx = 1) or
-	(disease =  50 and h2014mdstx = 1 and h2114mdstx = 1) or
-	(disease = 100 and h2018lymtx = 1 and h2118lymtx = 1) or
-	(disease = 150 and h2018lymtx = 1 and h2118lymtx = 1)
-	));
+	if formrecv = 1 or (
+	h2000frmtx = 1 and h2100frmtx = 1 and (
+	(disease = 10 and h2010amltx = 1 and h2110amltx = 1) or
+	(disease = 20 and h2011alltx = 1 and h2111alltx = 1) or
+	(disease = 30 and h2013clltx = 1 and h2113clltx = 1) or
+	(disease = 40 and h2012cmltx = 1 and h2112cmltx = 1) or
+	(disease = 50 and h2014mdstx = 1 and h2114mdstx = 1) or
+	(disease in (100, 150) and h2018lymtx = 1 and h2118lymtx = 1)));
 snippet pkeep
 	call streaminit(86409);
 	pkeepfloor = rand("Uniform");
@@ -165,6 +164,15 @@ snippet proc
 	proc ${1} data = ${2:&final}${3};${4}
 snippet table
 	table ${1} / nocol norow nopct missing;${2}
+snippet iml
+	proc iml;
+		use ${1:dataset};
+		read all var {${2:variables}};${3}
+	quit;
+snippet create
+	create ${1:dataset} var {${2:variables}};
+	append;
+	close ${1};${3}
 snippet ods MS Word
 	ods rtf file = "${1}" style = kenyrtf;${2}
 snippet ods Excel
@@ -180,4 +188,3 @@ snippet endods Excel
 snippet endods Graphics
 	ods graphics off;
 	ods listing sge = off;
-
