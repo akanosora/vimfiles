@@ -1,19 +1,19 @@
 snippet pre
 	options nodate nonotes pagesize = max dkricond = warn
 	fmtsearch = (self, export, allo, ted);
-	
+
 	%include macro(std style yeartxgp dnrinfo racegp2
 	discore condint gvhdgp cytoinfo treatpr celldose sorror
 	relapse acgvhd recovery report appendix lifetest-new
 	lifetestplot-new check dictmcr selection);
-	
+
 	options notes mprint /* mlogic */ symbolgen;
 snippet tedconsent
-	if consenrs < 0 and sgirbres >= 0 then consenrs = sgirbres; 
-	if yeartx <= 2007 and consenrs = 0 then delete; 
+	if consenrs < 0 and sgirbres >= 0 then consenrs = sgirbres;
+	if yeartx <= 2007 and consenrs = 0 then delete;
 	else if yeartx > 2007 and (consenrs <= 0 or consenrs = 3) then delete;
 snippet crfconsent
-	if yeartx <= 2007 and sgirbres = 0 then delete; 
+	if yeartx <= 2007 and sgirbres = 0 then delete;
 	else if yeartx > 2007 and (sgirbres <= 0 or sgirbres = 3) then delete;
 snippet formrecv
 	if formrecv = 1 or (
@@ -28,7 +28,9 @@ snippet pkeep
 	call streaminit(86409);
 	pkeepfloor = rand("Uniform");
 	if assignby = 4 and yeartx <= 2002
-	and pkeepfloor >= pkeep >= 0 then delete;	
+	and pkeepfloor >= pkeep >= 0 then delete;
+snippet embargoed
+	if ccn in (11089, 10026, 10022, 10195) then delete;
 snippet mds
 	* 50: MDS, unclassified | 51: RA | 52: RAEB | 54: CMML | 55: RARS
 	* 61: RAEB-1 | 62: RAEB-2 | 64: RCMD | 65: RCMD/RS | 66: 5q- syndrome
@@ -81,6 +83,14 @@ snippet disgrp
 	else if disease < 300 then disgrp = 10; * Other malig dis;
 	else if disease = 300 then disgrp = 11; * SAA;
 	else if disease <= 900 then disgrp = 12; * Other non-malig dis;
+snippet region
+	* WHO region;
+	if country in (33, 84, 85, 88) then whoregion = 1; * Africa;
+	else if country in (1, 2, 6: 8, 10, 39, 43, 47, 50, 51, 55, 56, 75: 78, 81, 91) then whoregion = 2; * Americas;
+	else if country in (23, 31, 44, 48, 53, 54, 57, 58, 69, 92) then whoregion = 3; * Eastern Mediterranean;
+	else if country in (18, 72, 79) then whoregion = 5; * SE Asia;
+	else if country in (4, 9, 22, 24, 25, 27, 37, 46, 52, 86) then whoregion = 6; * Western Pacific;
+	else if country in (3, 5, 11: 17, 19: 21, 26, 28: 30, 32, 34: 36, 38, 40: 42, 45, 49, 59: 68, 70, 80, 82, 83, 87, 95) then whoregion = 4; * Europe;
 snippet graft
 	* Graft source;
 	if graftype = 1 then graftypecat = 1; * Bone marrow;
@@ -98,7 +108,7 @@ snippet other
 		var crid;
 	run;
 	ods tagsets.excelxp close;
-	
+
 	ods tagsets.excelxp file = "othgvhd.xls" style = kenyxls
 	options(frozen_rowheaders = "1" frozen_headers = "1");
 	proc freq data = &final;
