@@ -23,7 +23,8 @@ snippet formrecv
 	(disease = 30 and h2013clltx = 1 and h2113clltx = 1) or
 	(disease = 40 and h2012cmltx = 1 and h2112cmltx = 1) or
 	(disease = 50 and h2014mdstx = 1 and h2114mdstx = 1) or
-	(disease in (100, 150) and h2018lymtx = 1 and h2118lymtx = 1)));
+	(disease in (100, 150) and h2018lymtx = 1 and h2118lymtx = 1) or
+	(disease = 170 and h2016myetx = 1 and h2116myetx = 1)));
 snippet pkeep
 	call streaminit(86409);
 	pkeepfloor = rand("Uniform");
@@ -117,7 +118,7 @@ snippet other
 	run;
 	ods tagsets.excelxp close;
 snippet lifetest
-	%lifetest(indata = ${1:dataset}, strata = ${2:strata}, event = anc, competerisk = dwoanc, intv = intxanc, timelist = 0.921 3.28);
+	%lifetest(indata = ${1:dataset}, strata = ${2:strata}, event = anc, competerisk = dwoanc, intv = intxanc, timelist = 0.921);
 	%lifetest(indata = $1, strata = $2, event = platelet, competerisk = dwoplatelet, intv = intxplatelet, timelist = 0.921 3.28);
 	%lifetest(indata = $1, strata = $2, event = agvhd24, competerisk = dwoagvhd24, intv = intxagvhd24, timelist = 3.28);
 	%lifetest(indata = $1, strata = $2, event = agvhd34, competerisk = dwoagvhd34, intv = intxagvhd34, timelist = 3.28);
@@ -189,7 +190,7 @@ snippet ods Excel
 	ods tagsets.excelxp file = "${1}" style = kenyxls
 	options(frozen_rowheaders = "1" frozen_headers = "1");${2}
 snippet ods Graphics
-	ods listing style = kenyplot sge = on;
+	ods listing style = kenyplot;
 	ods graphics on / reset = all imagename = "${1:figure}" width = ${2:800px} height = ${3:600px} imagefmt = ${4:png};${5}
 snippet endods MS Word
 	ods rtf close;
@@ -197,4 +198,3 @@ snippet endods Excel
 	ods tagsets.excelxp close;
 snippet endods Graphics
 	ods graphics off;
-	ods listing sge = off;
