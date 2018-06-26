@@ -1,7 +1,7 @@
 " Vim indent file
 " Language:     SAS
 " Maintainer:   Zhen-Huan Hu <wildkeny@gmail.com>
-" Version:      3.0.2
+" Version:      3.0.3
 " Last Change:  Jun 26, 2018
 
 if exists("b:did_indent")
@@ -47,12 +47,6 @@ let s:run_processing_procs = [
       \ 'iml',
       \ ]
 
-" Return the effective value of softtabstop setting
-" Thanks Christian Brabandt for the patch
-function! s:Sts()
-  return (&sts > 0) ? &sts : shiftwidth()
-endfunction
-
 " Find the line number of previous keyword defined by the regex
 function! s:PrevMatch(lnum, regex)
   let prev_lnum = prevnonblank(a:lnum - 1)
@@ -80,7 +74,7 @@ function! GetSASIndent()
     if (prev_line =~? s:section_str && prev_line !~? s:section_run && prev_line !~? s:section_end) ||
           \ (prev_line =~? s:block_str && prev_line !~? s:block_end) ||
           \ (prev_line =~? s:macro_str && prev_line !~? s:macro_end)
-      let ind = indent(prev_lnum) + s:Sts()
+      let ind = indent(prev_lnum) + shiftwidth()
     elseif prev_line =~? s:section_run && prev_line !~? s:section_end
       let prev_section_str_lnum = s:PrevMatch(v:lnum, s:section_str)
       let prev_section_end_lnum = max([
@@ -91,7 +85,7 @@ function! GetSASIndent()
       if prev_section_end_lnum < prev_section_str_lnum &&
             \ getline(prev_section_str_lnum) =~? '\v%(^|;)\s*proc\s+%(' .
             \ join(s:run_processing_procs, '|') . ')>'
-        let ind = indent(prev_lnum) + s:Sts()
+        let ind = indent(prev_lnum) + shiftwidth()
       else
         let ind = indent(prev_lnum)
       endif
@@ -114,7 +108,7 @@ function! GetSASIndent()
     " while not the beginning of a block (at the same line)
     " Returning the indent of previous block start directly
     " would not work due to nesting
-    let ind = ind - s:Sts()
+    let ind = ind - shiftwidth()
   elseif curr_line =~? s:section_str || curr_line =~? s:section_run || curr_line =~? s:section_end
     " Re-adjust if current line is the start/end of a section
     " since the end of a section could be inexplicit
@@ -134,7 +128,7 @@ function! GetSASIndent()
             \ s:PrevMatch(v:lnum, s:program_end)])
     endif
     if prev_section_end_lnum < prev_section_str_lnum
-      let ind = ind - s:Sts()
+      let ind = ind - shiftwidth()
     endif
   endif
   return ind
