@@ -48,6 +48,7 @@ let s:run_processing_procs = [
       \ ]
 
 " Return the effective value of softtabstop setting
+" Thanks Christian Brabandt for the patch
 function! s:Sts()
   return (&sts > 0) ? &sts : shiftwidth()
 endfunction
