@@ -8,8 +8,10 @@ set lines=60 columns=150
 " Set fonts
 if has('gui_macvim')
   set guifont=Source\ Code\ Pro:h14
+  set printfont=Source\ Code\ Pro:h12
 elseif has('gui_win32')
   set guifont=Consolas:h11:cANSI
+  set printfont=Consolas:h10:cANSI
   if version > 704
     set renderoptions=type:directx,level:0.75,gamma:1.25,contrast:0.25,geom:1,renmode:5,taamode:1
   endif
