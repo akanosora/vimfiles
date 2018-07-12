@@ -17,7 +17,7 @@ setlocal softtabstop=2 shiftwidth=2 expandtab
 setlocal textwidth=80 formatoptions=croq
 setlocal comments=sr:/*,mb:/*,ex:*/ commentstring=/*%s*/
 setlocal omnifunc=sascomplete#Complete
-setlocal makeprg=sas\ -noverbose\ -sysin\ '%:p'
+setlocal makeprg=sas\ -memsize\ 36g\ -noverbose\ -sysin\ '%:p'
 
 " Find autoexec files from $PATH
 for syspath in split(expand('$PATH'), has('win32') ? ';' : ':')
