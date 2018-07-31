@@ -1,7 +1,7 @@
 " Vim indent file
 " Language:     SAS
 " Maintainer:   Zhen-Huan Hu <wildkeny@gmail.com>
-" Version:      3.0.5
+" Version:      3.0.6
 " Last Change:  2018-07-30
 
 if exists("b:did_indent")
@@ -153,7 +153,7 @@ function! GetSASIndent()
     " Current line is the end of a submit block
     " Match the indentation of the start of the submit block
     return indent(s:PrevMatch(v:lnum, s:submit_str))
-  elseif curr_line =~? s:block_end && curr_line !~? s:block_str
+  elseif curr_line =~? s:block_end && curr_line !~? s:block_str && curr_line !~? s:block_proc_str
     " Re-adjust if current line is the end of a block
     " while not the beginning of a block (at the same line)
     " Returning the indent of previous block start directly
