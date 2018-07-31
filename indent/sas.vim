@@ -37,7 +37,7 @@ let s:section_run = '\v%(^|;)\s*run\s*;'
 let s:section_end = '\v%(^|;)\s*%(quit|enddata)\s*;'
 
 " Regex that captures the start of a control block
-let s:block_str = '\v<%(do>%([^;]+<%(to|over|while)>[^;]+)=|%(compute|define\s+%(column|footer|header|style|table|tagset|crosstabs|statgraph)|edit|layout|method|select)>[^;]+|begingraph)\s*;'
+let s:block_str = '\v<%(do>%([^;]+<%(to|over|while)>[^;]+)=|select%(\s+\([^;]+\))=|%(compute|define|edit|layout|method)>[^;]+|begingraph)\s*;'
 " Regex that captures the end of a control block
 let s:block_end = '\v<%(end|endcomp|endlayout|endgraph)\s*;'
 
