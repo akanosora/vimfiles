@@ -19,11 +19,21 @@ endif
 let s:cpo_save = &cpo
 set cpo&vim
 
+" List of procs supporting run-processing
+let s:run_processing_procs = [
+      \ 'catalog', 'chart', 'datasets', 'document', 'ds2', 'plot', 'sql',
+      \ 'gareabar', 'gbarline', 'gchart', 'gkpi', 'gmap', 'gplot', 'gradar', 'greplay', 'gslide', 'gtile',
+      \ 'anova', 'arima', 'catmod', 'factex', 'glm', 'model', 'optex', 'plan', 'reg',
+      \ 'iml',
+      \ ]
+
 " Regex that captures the start of a data/proc section
 let s:section_str = '\v%(^|;)\s*%(data|proc)>'
-" Regex that captures the end of a run-processing section
-let s:section_run = '\v%(^|;)\s*run\s*;'
+" Regex that captures the start of a data/proc section that supports run-processing
+let s:section_rpp_str = '\v%(^|;)\s*proc\s+%(' . join(s:run_processing_procs, '|') . ')>'
 " Regex that captures the end of a data/proc section
+let s:section_run = '\v%(^|;)\s*run\s*;'
+" Regex that captures the end of a data/proc section that supports run-processing
 let s:section_end = '\v%(^|;)\s*%(quit|enddata)\s*;'
 
 " Regex that captures the start of a control block
@@ -36,21 +46,13 @@ let s:submit_str = '\v%(^|;)\s*submit>'
 " Regex that captures the end of a submit block
 let s:submit_end = '\v%(^|;)\s*endsubmit\s*;'
 
-" Regex that captures the start of a macro
+" Regex that captures the start of a macro definition
 let s:macro_str = '\v%(^|;)\s*\%macro>'
-" Regex that captures the end of a macro
+" Regex that captures the end of a macro definition
 let s:macro_end = '\v%(^|;)\s*\%mend\s*;'
 
 " Regex that defines the end of the program
 let s:program_end = '\v%(^|;)\s*endsas\s*;'
-
-" List of procs supporting run-processing
-let s:run_processing_procs = [
-      \ 'catalog', 'chart', 'datasets', 'document', 'ds2', 'plot', 'sql',
-      \ 'gareabar', 'gbarline', 'gchart', 'gkpi', 'gmap', 'gplot', 'gradar', 'greplay', 'gslide', 'gtile',
-      \ 'anova', 'arima', 'catmod', 'factex', 'glm', 'model', 'optex', 'plan', 'reg',
-      \ 'iml',
-      \ ]
 
 " Find the line number of previous keyword defined by the regex
 function! s:PrevMatch(lnum, regex)
@@ -90,10 +92,9 @@ function! GetSASIndent()
             \ s:PrevMatch(v:lnum, s:macro_str  ),
             \ s:PrevMatch(v:lnum, s:macro_end  ),
             \ s:PrevMatch(v:lnum, s:program_end)])
-      " Check if the section supports run-processing
+      " Check if the previous section supports run-processing
       if prev_section_end_lnum < prev_section_str_lnum &&
-            \ getline(prev_section_str_lnum) =~? '\v%(^|;)\s*proc\s+%(' .
-            \ join(s:run_processing_procs, '|') . ')>'
+            \ getline(prev_section_str_lnum) =~? s:section_rpp_str
         let ind = indent(prev_lnum) + shiftwidth()
       else
         let ind = indent(prev_lnum)
@@ -106,30 +107,34 @@ function! GetSASIndent()
   let curr_line = getline(v:lnum)
   if curr_line =~? s:program_end
     " End of the program
-    " Same indentation as the first non-blank line
-    return indent(nextnonblank(1))
-  elseif curr_line =~? s:macro_end
+    let prev_macro_str_lnum = s:PrevMatch(v:lnum, s:macro_str)
+    let prev_macro_end_lnum = s:PrevMatch(v:lnum, s:macro_end)
+    if prev_macro_end_lnum < prev_macro_str_lnum
+      " Same indentation as the first non-blank line within the macro definition
+      return indent(nextnonblank(prev_macro_str_lnum + 1))
+    else
+      " Same indentation as the first non-blank line
+      return indent(nextnonblank(1))
+    endif
+  elseif curr_line =~? s:macro_end && curr_line !~? s:macro_str
     " Current line is the end of a macro
     " Match the indentation of the start of the macro
     return indent(s:PrevMatch(v:lnum, s:macro_str))
-  elseif curr_line =~? s:submit_end
-    " Current line is the end of a submit block
-    " Match the indentation of the start of the submit block
-    return indent(s:PrevMatch(v:lnum, s:submit_str))
-  elseif curr_line =~? s:block_end && curr_line !~? s:block_str
-    " Re-adjust if current line is the end of a block
-    " while not the beginning of a block (at the same line)
-    " Returning the indent of previous block start directly
-    " would not work due to nesting
-    let ind = ind - shiftwidth()
   elseif curr_line =~? s:section_end
     " Current line is the end of a run-processing section
     " Match the indentation of the start of the run-processing section
-    return indent(s:PrevMatch(v:lnum, '\v%(^|;)\s*proc\s+%(' .
-          \ join(s:run_processing_procs, '|') . ')>'))
+    let prev_section_rpp_str_lnum = s:PrevMatch(v:lnum, s:section_rpp_str)
+    let prev_section_end_lnum = max([
+          \ s:PrevMatch(v:lnum, s:section_end),
+          \ s:PrevMatch(v:lnum, s:macro_str  ),
+          \ s:PrevMatch(v:lnum, s:macro_end  ),
+          \ s:PrevMatch(v:lnum, s:program_end)])
+    if prev_section_end_lnum < prev_section_rpp_str_lnum
+      return indent(prev_section_rpp_str_lnum)
+    endif
   elseif curr_line =~? s:section_str || curr_line =~? s:section_run
     " Re-adjust if current line is the start/end of a section
-    " since the end of a section could be inexplicit
+    " since the end of the previous section could be inexplicit
     let prev_section_str_lnum = s:PrevMatch(v:lnum, s:section_str)
     let prev_section_end_lnum = max([
           \ s:PrevMatch(v:lnum, s:section_end),
@@ -139,8 +144,18 @@ function! GetSASIndent()
           \ s:PrevMatch(v:lnum, s:macro_end  ),
           \ s:PrevMatch(v:lnum, s:program_end)])
     if prev_section_end_lnum < prev_section_str_lnum
-      let ind = indent(prev_section_str_lnum)
+      return indent(prev_section_str_lnum)
     endif
+  elseif curr_line =~? s:submit_end && curr_line !~? s:submit_str
+    " Current line is the end of a submit block
+    " Match the indentation of the start of the submit block
+    return indent(s:PrevMatch(v:lnum, s:submit_str))
+  elseif curr_line =~? s:block_end && curr_line !~? s:block_str
+    " Re-adjust if current line is the end of a block
+    " while not the beginning of a block (at the same line)
+    " Returning the indent of previous block start directly
+    " would not work due to nesting
+    let ind = ind - shiftwidth()
   endif
   return ind
 endfunction
