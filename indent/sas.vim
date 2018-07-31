@@ -10,7 +10,7 @@ endif
 let b:did_indent = 1
 
 setlocal indentexpr=GetSASIndent()
-setlocal indentkeys+=;,=~data,=~proc,=~macro
+setlocal indentkeys+=;,=~data,=~proc
 
 if exists("*GetSASIndent")
   finish
