@@ -36,9 +36,11 @@ let s:section_run = '\v%(^|;)\s*run\s*;'
 " Regex that captures the end of a data/proc section that supports run-processing
 let s:section_end = '\v%(^|;)\s*%(quit|enddata)\s*;'
 
-" Regex that captures the start of a control block
-let s:block_str = '\v<%(do>%([^;]+<%(to|over|while)>[^;]+)=|select%(\s+\([^;]+\))=|%(compute|define|edit|layout|method)>[^;]+|begingraph)\s*;'
-" Regex that captures the end of a control block
+" Regex that captures the start of a control block within data section
+let s:block_str = '\v<%(do>%([^;]+<%(to|over|while)>[^;]+)=|select%(\s+\([^;]+\))=)\s*;'
+" Regex that captures the start of a control block within proc section
+let s:block_proc_str = '\v%(^|;)\s*%(begingraph|compute|define|edit|layout|method)>'
+" Regex that captures the end of a template/control block
 let s:block_end = '\v<%(end|endcomp|endlayout|endgraph)\s*;'
 
 " Regex that captures the start of a submit block
@@ -80,6 +82,7 @@ function! GetSASIndent()
     " while not the end of a macro/section/block (at the same line)
     if (prev_line =~? s:section_str && prev_line !~? s:section_run && prev_line !~? s:section_end) ||
           \ (prev_line =~? s:block_str && prev_line !~? s:block_end) ||
+          \ (prev_line =~? s:block_proc_str && prev_line !~? s:block_end) ||
           \ (prev_line =~? s:submit_str && prev_line !~? s:submit_end) ||
           \ (prev_line =~? s:macro_str && prev_line !~? s:macro_end)
       let ind = indent(prev_lnum) + shiftwidth()
