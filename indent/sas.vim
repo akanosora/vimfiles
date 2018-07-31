@@ -58,10 +58,11 @@ let s:program_end = '\v%(^|;)\s*endsas\s*;'
 
 " Find the line number of previous keyword defined by the regex
 function! s:PrevMatch(lnum, regex)
+  let skip_line = '\v%(^|;)\s*\%=\*'
   let prev_lnum = prevnonblank(a:lnum - 1)
   while prev_lnum > 0
     let prev_line = getline(prev_lnum)
-    if prev_line =~? a:regex
+    if prev_line =~? a:regex && prev_line !~? skip_line
       break
     else
       let prev_lnum = prevnonblank(prev_lnum - 1)
