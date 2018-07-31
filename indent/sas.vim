@@ -40,7 +40,7 @@ let s:section_end = '\v%(^|;)\s*%(quit|enddata)\s*;'
 let s:block_str = '\v<%(do>%([^;]+<%(to|over|while)>[^;]+)=|select%(\s+\([^;]+\))=)\s*;'
 " Regex that captures the start of a control block within proc section
 let s:block_proc_str = '\v%(^|;)\s*%(begingraph|compute|define|edit|layout|method)>'
-" Regex that captures the end of a template/control block
+" Regex that captures the end of a control block
 let s:block_end = '\v<%(end|endcomp|endlayout|endgraph)\s*;'
 
 " Regex that captures the start of a submit block
