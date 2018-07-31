@@ -85,7 +85,9 @@ function! GetSASIndent()
       let prev_section_str_lnum = s:PrevMatch(v:lnum, s:section_str)
       let prev_section_end_lnum = max([
             \ s:PrevMatch(v:lnum, s:section_end),
+            \ s:PrevMatch(v:lnum, s:submit_str ),
             \ s:PrevMatch(v:lnum, s:submit_end ),
+            \ s:PrevMatch(v:lnum, s:macro_str  ),
             \ s:PrevMatch(v:lnum, s:macro_end  ),
             \ s:PrevMatch(v:lnum, s:program_end)])
       " Check if the section supports run-processing
@@ -129,26 +131,15 @@ function! GetSASIndent()
     " Re-adjust if current line is the start/end of a section
     " since the end of a section could be inexplicit
     let prev_section_str_lnum = s:PrevMatch(v:lnum, s:section_str)
-    " Check if the previous section supports run-processing
-    if getline(prev_section_str_lnum) =~? '\v%(^|;)\s*proc\s+%(' .
-          \ join(s:run_processing_procs, '|') . ')>'
-      let prev_section_end_lnum = max([
-            \ s:PrevMatch(v:lnum, s:section_end),
-            \ s:PrevMatch(v:lnum, s:submit_end ),
-            \ s:PrevMatch(v:lnum, s:macro_end  ),
-            \ s:PrevMatch(v:lnum, s:program_end)])
-    else
-      let prev_section_end_lnum = max([
-            \ s:PrevMatch(v:lnum, s:section_end),
-            \ s:PrevMatch(v:lnum, s:section_run),
-            \ s:PrevMatch(v:lnum, s:submit_end ),
-            \ s:PrevMatch(v:lnum, s:macro_end  ),
-            \ s:PrevMatch(v:lnum, s:program_end)])
-    endif
-    let prev_submit_str_lnum = s:PrevMatch(v:lnum, s:submit_str)
-    if (prev_section_end_lnum < prev_section_str_lnum) &&
-          \ (prev_submit_str_lnum < prev_section_str_lnum)
-      let ind = ind - shiftwidth()
+    let prev_section_end_lnum = max([
+          \ s:PrevMatch(v:lnum, s:section_end),
+          \ s:PrevMatch(v:lnum, s:submit_str ),
+          \ s:PrevMatch(v:lnum, s:submit_end ),
+          \ s:PrevMatch(v:lnum, s:macro_str  ),
+          \ s:PrevMatch(v:lnum, s:macro_end  ),
+          \ s:PrevMatch(v:lnum, s:program_end)])
+    if prev_section_end_lnum < prev_section_str_lnum
+      let ind = indent(prev_section_str_lnum)
     endif
   endif
   return ind
