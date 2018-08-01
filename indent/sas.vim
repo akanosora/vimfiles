@@ -1,8 +1,8 @@
 " Vim indent file
-" Language:     SAS
-" Maintainer:   Zhen-Huan Hu <wildkeny@gmail.com>
-" Version:      3.0.6
-" Last Change:  2018-07-30
+" Language:    SAS
+" Maintainer:  Zhen-Huan Hu <wildkeny@gmail.com>
+" Version:     3.0.6
+" Last Change: 2018-07-30
 
 if exists("b:did_indent")
   finish
