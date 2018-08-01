@@ -1,7 +1,7 @@
 " Vim syntax file
-" Language:	SAS lst file
-" Maintainer:	Zhenhuan Hu <zhu@mcw.edu>
-" Last Change:	Mar 11, 2017
+" Language:    SAS lst file
+" Maintainer:  Zhenhuan Hu <zhu@mcw.edu>
+" Last Change: Mar 11, 2017
 
 " Quit when a syntax file was already loaded
 if version < 600
