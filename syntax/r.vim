@@ -31,23 +31,18 @@ syn match rOKeyword contained /@\(format\|importClassesFrom\|importFrom\|importM
 syn match rOKeyword contained /@\(method\|nord\|note\|references\|seealso\|setClass\|slot\|source\|title\|usage\)/
 syn match rOComment contains=@Spell,rOKeyword /#'.*/
 
-syn match rStrError display contained /\\./
-" String enclosed in double quotes
-syn region rString contains=rSpecial,rStrError,@Spell start=/"/ skip=/\\\\\|\\"/ end=/"/
-" String enclosed in single quotes
-syn region rString contains=rSpecial,rStrError,@Spell start=/'/ skip=/\\\\\|\\'/ end=/'/
-
 " New line, carriage return, tab, backspace, bell, feed, vertical tab, backslash
-syn match rSpecial display contained /\\\(n\|r\|t\|b\|a\|f\|v\|'\|\"\)\|\\\\/
+syn match rSpecial display contained /\\[nrtbafv'"\\]/
+" Character with given octal/hex code
+syn match rSpecial display contained /\\[0-8]\{1,3}\|\\x\x\{1,2}/
+" Unicode character with given code
+syn match rSpecial display contained /\\u\x\{1,4}\|\\U\x\{1,8}/
+syn match rSpecial display contained /\\u{\x\{1,4}}\|\\U{\x\{1,8}}/
 
-" Hexadecimal and octal digits
-syn match rSpecial display contained /\\\(x\x\{1,2}\|[0-8]\{1,3}\)/
-
-" Unicode characters
-syn match rSpecial display contained /\\u\x\{1,4}/
-syn match rSpecial display contained /\\U\x\{1,8}/
-syn match rSpecial display contained /\\u{\x\{1,4}}/
-syn match rSpecial display contained /\\U{\x\{1,8}}/
+" String enclosed with double quotes
+syn region rString contains=@Spell,rSpecial start=/"/ skip=/\\\\\|\\"/ end=/"/
+" String enclosed with single quotes
+syn region rString contains=@Spell,rSpecial start=/'/ skip=/\\\\\|\\'/ end=/'/
 
 " Statement
 syn keyword rStatement break next return
@@ -90,6 +85,7 @@ syn match rComplex /\<\d\+\.\d*\([Ee][-+]\=\d\+\)\=i/
 syn match rComplex /\<\.\d\+\([Ee][-+]\=\d\+\)\=i/
 syn match rComplex /\<\d\+[Ee][-+]\=\d\+i/
 
+" Operator
 syn match rOperator /&/
 syn match rOperator /-/
 syn match rOperator /\*/
@@ -97,29 +93,11 @@ syn match rOperator /+/
 syn match rOperator /=/
 syn match rOperator /[|!<>^~/:]/
 syn match rOperator /%\{2}\|%\S*%/
-syn match rOpError  /\*\{3}/
-syn match rOpError  /\/\//
-syn match rOpError  /&&&/
-syn match rOpError  /|||/
-syn match rOpError  /<</
-syn match rOpError  />>/
 
 syn match rArrow /<\{1,2}-/
 syn match rArrow /->\{1,2}/
 
-" Special
-syn match rDelimiter /[,;:]/
-
-" Error
-syn region rRegion matchgroup=Delimiter start=/(/ matchgroup=Delimiter end=/)/ transparent contains=ALLBUT,rError,rBraceError,rCurlyError fold
-syn region rRegion matchgroup=Delimiter start=/{/ matchgroup=Delimiter end=/}/ transparent contains=ALLBUT,rError,rBraceError,rParenError fold
-syn region rRegion matchgroup=Delimiter start=/\[/ matchgroup=Delimiter end=/]/ transparent contains=ALLBUT,rError,rCurlyError,rParenError fold
-
-syn match rError      /[)\]}]/
-syn match rBraceError /[)}]/ contained
-syn match rCurlyError /[)\]]/ contained
-syn match rParenError /[\]}]/ contained
-
+" Function
 syn keyword rFunction abbreviate abs acos acosh addNA addTaskCallback agrep
 syn keyword rFunction alist all all.equal all.equal.character all.equal.default all.equal.factor all.equal.formula
 syn keyword rFunction all.equal.language all.equal.list all.equal.numeric all.equal.POSIXct all.equal.raw all.names all.vars
@@ -422,12 +400,8 @@ syn keyword rFunction View vignette write.csv write.csv2 write.socket write.tabl
 syn keyword rFunction xemacs zip etags2ctags vim.bol vim.help vim.interlace.rmd vim.interlace.rnoweb
 syn keyword rFunction vim.interlace.rrst vim.list.args vim.names vim.openpdf vim.plot vim.print vim.srcdir
 
-syn match rDollar display contained /\$/
-syn match rDollar display contained /@/
-
-" List elements will not be highlighted as functions:
-syn match rLstElmt /\$[a-zA-Z0-9\\._]*/ contains=rDollar
-syn match rLstElmt /@[a-zA-Z0-9\\._]*/ contains=rDollar
+" List elements
+syn match rLstElmt /[$@][a-zA-Z0-9\\._]*/
 
 " Functions that may add new objects
 syn keyword rPreProc library require attach detach source
@@ -438,31 +412,23 @@ syn keyword rType array category character complex double function integer list 
 " Define the default highlighting.
 hi def link rArrow       Statement
 hi def link rBoolean     Boolean
-hi def link rBraceError  Error
 hi def link rComment     Comment
 hi def link rCommentTodo Todo
 hi def link rOComment    Comment
 hi def link rComplex     Number
 hi def link rConditional Conditional
 hi def link rConstant    Constant
-hi def link rCurlyError  Error
-hi def link rDelimiter   Delimiter
-hi def link rDollar      SpecialChar
-hi def link rError       Error
 hi def link rFloat       Float
 hi def link rFunction    Function
 hi def link rInteger     Number
 hi def link rLstElmt	 Normal
 hi def link rNumber      Number
 hi def link rOperator    Operator
-hi def link rOpError     Error
-hi def link rParenError  Error
 hi def link rPreProc     PreProc
 hi def link rRepeat      Repeat
 hi def link rSpecial     SpecialChar
 hi def link rStatement   Statement
 hi def link rString      String
-hi def link rStrError    Error
 hi def link rType        Type
 hi def link rOKeyword    Title
 
