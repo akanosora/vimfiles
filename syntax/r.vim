@@ -44,22 +44,6 @@ syn region rString contains=@Spell,rSpecial start=/"/ skip=/\\\\\|\\"/ end=/"/
 " String enclosed with single quotes
 syn region rString contains=@Spell,rSpecial start=/'/ skip=/\\\\\|\\'/ end=/'/
 
-" Statement
-syn keyword rStatement break next return
-syn keyword rConditional if else
-syn keyword rRepeat for in repeat while
-
-" Constant (not really)
-syn keyword rConstant T F LETTERS letters month.abb month.name pi
-syn keyword rConstant R.version.string
-
-syn keyword rNumber NA_integer_ NA_real_ NA_complex_ NA_character_
-
-" Constants
-syn keyword rConstant NULL
-syn keyword rBoolean FALSE TRUE
-syn keyword rNumber NA Inf NaN
-
 " Integer
 syn match rInteger /\<\d\+L/
 syn match rInteger /\<0x\([0-9]\|[a-f]\|[A-F]\)\+L/
@@ -86,16 +70,26 @@ syn match rComplex /\<\.\d\+\([Ee][-+]\=\d\+\)\=i/
 syn match rComplex /\<\d\+[Ee][-+]\=\d\+i/
 
 " Operator
-syn match rOperator /&/
-syn match rOperator /-/
-syn match rOperator /\*/
-syn match rOperator /+/
-syn match rOperator /=/
-syn match rOperator /[|!<>^~/:]/
-syn match rOperator /%\{2}\|%\S*%/
+syn match rOperator /[+\-*/\^!=<>|&:]/
+syn match rOperator /%%\|%\/%/
 
 syn match rArrow /<\{1,2}-/
 syn match rArrow /->\{1,2}/
+
+" Constant (reserved)
+syn keyword rConstant NULL
+syn keyword rBoolean TRUE FALSE T F
+syn keyword rNumber Inf NaN NA NA_integer_ NA_real_ NA_complex_ NA_character_
+" Constant (built in)
+syn keyword rConstant LETTERS letters month.abb month.name pi
+
+" Type
+syn keyword rType array category character complex double function integer list logical matrix numeric vector data.frame
+
+" Statement
+syn keyword rStatement break next return
+syn keyword rConditional if else
+syn keyword rRepeat for in repeat while
 
 " Function
 syn keyword rFunction abbreviate abs acos acosh addNA addTaskCallback agrep
@@ -399,15 +393,11 @@ syn keyword rFunction update.packages update.packageStatus upgrade URLdecode URL
 syn keyword rFunction View vignette write.csv write.csv2 write.socket write.table xedit
 syn keyword rFunction xemacs zip etags2ctags vim.bol vim.help vim.interlace.rmd vim.interlace.rnoweb
 syn keyword rFunction vim.interlace.rrst vim.list.args vim.names vim.openpdf vim.plot vim.print vim.srcdir
-
-" List elements
-syn match rLstElmt /[$@][a-zA-Z0-9\\._]*/
-
 " Functions that may add new objects
 syn keyword rPreProc library require attach detach source
 
-" Type
-syn keyword rType array category character complex double function integer list logical matrix numeric vector data.frame
+" List elements
+syn match rComponent /[$@][a-zA-Z0-9\\._]*/
 
 " Define the default highlighting.
 hi def link rArrow       Statement
@@ -416,12 +406,12 @@ hi def link rComment     Comment
 hi def link rCommentTodo Todo
 hi def link rOComment    Comment
 hi def link rComplex     Number
+hi def link rComponent	 Normal
 hi def link rConditional Conditional
 hi def link rConstant    Constant
 hi def link rFloat       Float
 hi def link rFunction    Function
 hi def link rInteger     Number
-hi def link rLstElmt	 Normal
 hi def link rNumber      Number
 hi def link rOperator    Operator
 hi def link rPreProc     PreProc
