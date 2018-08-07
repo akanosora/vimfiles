@@ -20,7 +20,7 @@ setlocal iskeyword=@,48-57,_,.
 syn case match
 
 " Comment
-syn match rCommentTodo contained /\(BUG\|FIXME\|NOTE\|TODO\):/
+syn keyword rCommentTodo contained BUG FIXME NOTE TODO
 syn match rComment contains=@Spell,rCommentTodo /#.*/
 
 " Roxygen
