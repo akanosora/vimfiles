@@ -44,6 +44,12 @@ inoremap <buffer> <silent> <S-F8> <C-o>:w\|!Rscript %:p<CR>
 cnoremap <buffer> <silent> <S-F8> <C-c>:w\|!Rscript %:p<CR>
 onoremap <buffer> <silent> <S-F8> <C-c>:w\|!Rscript %:p<CR>
 
+nnoremap <buffer> <silent> <F7> :call <SID>ExecuteOneLineR()<CR>
+vnoremap <buffer> <silent> <F7> :call <SID>ExecuteOneLineR()<CR>
+inoremap <buffer> <silent> <F7> <C-o>:call <SID>ExecuteOneLineR()<CR>
+cnoremap <buffer> <silent> <F7> <C-c>:call <SID>ExecuteOneLineR()<CR>
+onoremap <buffer> <silent> <F7> <C-c>:call <SID>ExecuteOneLineR()<CR>
+
 " Set comment toggle
 nnoremap <buffer> <silent> <F5> :call keny#ToggleComments()<CR>
 vnoremap <buffer> <silent> <F5> :call keny#ToggleComments()<CR>
@@ -60,6 +66,13 @@ function! s:SwitchRBuffer(dest, rw)
   elseif filereadable(expand('%<') . '.' . a:dest)
     silent execute (a:rw ? 'hide edit' : 'hide view') fnameescape(expand('%<') . '.' . a:dest)
   endif
+endfunction
+
+function! s:ExecuteOneLineR()
+  call inputsave()
+  let rcmd = input('Run R command: ')
+  call inputrestore()
+  execute '!Rscript -e ' . shellescape(rcmd)
 endfunction
 
 let &cpo = s:cpo_save
