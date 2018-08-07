@@ -32,7 +32,17 @@ nnoremap <buffer> <silent> <F4> :call <SID>SwitchRBuffer('Rout', 0)<CR>
 vnoremap <buffer> <silent> <F4> <C-c>:call <SID>SwitchRBuffer('Rout', 0)<CR>
 inoremap <buffer> <silent> <F4> <Esc>:call <SID>SwitchRBuffer('Rout', 0)<CR>
 
+nnoremap <buffer> <silent> <F8> :w\|!R CMD BATCH --no-restore --slave %:p<CR>
+vnoremap <buffer> <silent> <F8> :w\|!R CMD BATCH --no-restore --slave %:p<CR>
+inoremap <buffer> <silent> <F8> <C-o>:w\|!R CMD BATCH --no-restore --slave %:p<CR>
+cnoremap <buffer> <silent> <F8> <C-c>:w\|!R CMD BATCH --no-restore --slave %:p<CR>
+onoremap <buffer> <silent> <F8> <C-c>:w\|!R CMD BATCH --no-restore --slave %:p<CR>
 
+nnoremap <buffer> <silent> <S-F8> :w\|!Rscript %:p<CR>
+vnoremap <buffer> <silent> <S-F8> :w\|!Rscript %:p<CR>
+inoremap <buffer> <silent> <S-F8> <C-o>:w\|!Rscript %:p<CR>
+cnoremap <buffer> <silent> <S-F8> <C-c>:w\|!Rscript %:p<CR>
+onoremap <buffer> <silent> <S-F8> <C-c>:w\|!Rscript %:p<CR>
 
 " Set comment toggle
 nnoremap <buffer> <silent> <F5> :call keny#ToggleComments()<CR>
