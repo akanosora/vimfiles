@@ -70,7 +70,7 @@ endfunction
 
 function! s:RunR()
   update
-  call system('R CMD BATCH --no-restore --slave ' . shellescape(expand('%:p')))
+  call system('R CMD BATCH --no-restore --no-save --quiet ' . shellescape(expand('%:p')))
   if v:shell_error ==# 0
     echo 'All steps terminated normally'
   else
