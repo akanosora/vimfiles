@@ -32,17 +32,17 @@ nnoremap <buffer> <silent> <F4> :call <SID>SwitchRBuffer('Rout', 0)<CR>
 vnoremap <buffer> <silent> <F4> <C-c>:call <SID>SwitchRBuffer('Rout', 0)<CR>
 inoremap <buffer> <silent> <F4> <Esc>:call <SID>SwitchRBuffer('Rout', 0)<CR>
 
-nnoremap <buffer> <silent> <F8> :w\|!R CMD BATCH --no-restore --slave %:p<CR>
-vnoremap <buffer> <silent> <F8> :w\|!R CMD BATCH --no-restore --slave %:p<CR>
-inoremap <buffer> <silent> <F8> <C-o>:w\|!R CMD BATCH --no-restore --slave %:p<CR>
-cnoremap <buffer> <silent> <F8> <C-c>:w\|!R CMD BATCH --no-restore --slave %:p<CR>
-onoremap <buffer> <silent> <F8> <C-c>:w\|!R CMD BATCH --no-restore --slave %:p<CR>
+nnoremap <buffer> <silent> <F8> :call <SID>RunR()<CR>
+vnoremap <buffer> <silent> <F8> :call <SID>RunR()<CR>
+inoremap <buffer> <silent> <F8> <C-o>:call <SID>RunR()<CR>
+cnoremap <buffer> <silent> <F8> <C-c>:call <SID>RunR()<CR>
+onoremap <buffer> <silent> <F8> <C-c>:call <SID>RunR()<CR>
 
-nnoremap <buffer> <silent> <S-F8> :w\|!Rscript %:p<CR>
-vnoremap <buffer> <silent> <S-F8> :w\|!Rscript %:p<CR>
-inoremap <buffer> <silent> <S-F8> <C-o>:w\|!Rscript %:p<CR>
-cnoremap <buffer> <silent> <S-F8> <C-c>:w\|!Rscript %:p<CR>
-onoremap <buffer> <silent> <S-F8> <C-c>:w\|!Rscript %:p<CR>
+nnoremap <buffer> <silent> <S-F8> :call <SID>RunRScript()<CR>
+vnoremap <buffer> <silent> <S-F8> :call <SID>RunRScript()<CR>
+inoremap <buffer> <silent> <S-F8> <C-o>:call <SID>RunRScript()<CR>>
+cnoremap <buffer> <silent> <S-F8> <C-c>:call <SID>RunRScript()<CR>
+onoremap <buffer> <silent> <S-F8> <C-c>:call <SID>RunRScript()<CR>
 
 nnoremap <buffer> <silent> <F7> :call <SID>ExecuteOneLineR()<CR>
 vnoremap <buffer> <silent> <F7> :call <SID>ExecuteOneLineR()<CR>
@@ -66,6 +66,21 @@ function! s:SwitchRBuffer(dest, rw)
   elseif filereadable(expand('%<') . '.' . a:dest)
     silent execute (a:rw ? 'hide edit' : 'hide view') fnameescape(expand('%<') . '.' . a:dest)
   endif
+endfunction
+
+function! s:RunR()
+  update
+  call system('R CMD BATCH --no-restore --slave ' . shellescape(expand('%:p')))
+  if v:shell_error ==# 0
+    echo 'All steps terminated normally'
+  else
+    echo 'Exit status code: ' . v:shell_error
+  endif
+endfunction
+
+function! s:RunRScript()
+  update
+  execute '!Rscript ' . shellescape(expand('%:p'))
 endfunction
 
 function! s:ExecuteOneLineR()
