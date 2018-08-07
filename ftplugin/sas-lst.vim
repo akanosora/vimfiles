@@ -10,7 +10,7 @@ set cpo&vim
 " Local settings
 setlocal nowrap cursorline
 
-" Change the browse dialog on Win32 to show mainly Perl-related files
+" Change the browse dialog on Win32 to show mainly SAS-related files
 if has('gui_win32')
   let b:browsefilter = "SAS Source Files (*.sas)\t*.sas\n" .
         \ "SAS Log Files (*.log)\t*.log\n" .
