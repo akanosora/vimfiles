@@ -1,7 +1,7 @@
 " Vim syntax file
 " Language:    R output
 " Maintainer:  Jakson Aquino <jalvesaq@gmail.com>
-" Last Change: 2018-08-01
+" Last Change: 2018-08-09
 
 " For version 5.x: Clear all syntax items
 " For version 6.x and 7.x: Quit when a syntax file was already loaded
@@ -14,7 +14,7 @@ endif
 let s:cpo_save = &cpo
 set cpo&vim
 
-setlocal iskeyword=@,48-57,_,.
+syn iskeyword @,48-57,_,.
 
 syn case match
 

@@ -3,7 +3,7 @@
 " Maintainer:	      Jakson Aquino <jalvesaq@gmail.com>
 " Former Maintainers: Vaidotas Zemlys <zemlys@gmail.com>
 " 		      Tom Payne <tom@tompayne.org>
-" Last Change:	      2018-08-01
+" Last Change:	      2018-08-09
 " Filenames:	      *.R *.r *.Rhistory *.Rt
 
 if version < 600
@@ -15,7 +15,7 @@ endif
 let s:cpo_save = &cpo
 set cpo&vim
 
-setlocal iskeyword=@,48-57,_,.
+syn iskeyword @,48-57,_,.
 
 syn case match
 
