@@ -129,7 +129,7 @@ syn keyword sasProcStatementKeyword abort age append array attrib audit block br
 syn match sasProcStatement '\v%(^|;)\s*\zs\h\w*>' display contained contains=sasProcStatementKeyword,sasGlobalStatementKeyword
 syn match sasProcStatement '\v%(^|;)\s*\zsods>' display contained contains=sasGlobalStatementKeyword nextgroup=sasGlobalStatementODSKeyword skipwhite skipnl skipempty
 syn match sasProcStatement '\v%(^|;)\s*\zs%(format|informat)>' display contained contains=sasProcStatementKeyword nextgroup=sasFormatContext skipwhite skipnl skipempty
-syn region sasProc matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc%(\s+\h\w*)=>' end='\v%(^|;)\s*%(run|data|proc|endsas)>'me=s-1 fold contains=@sasBasicSyntax,sasDataStepFunction,sasProcStatement
+syn region sasProc matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc%(\s+\h\w*)=>' end='\v%(^|;)\s*%(run|data|proc|endsas)>'me=s-1 fold contains=@sasBasicSyntax,sasDataStepControl,sasDataStepFunction,sasProcStatement
 syn region sasProc matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc\s+%(catalog|chart|datasets|document|plot)>' end='\v%(^|;)\s*%(quit|data|proc|endsas)>'me=s-1 fold contains=@sasBasicSyntax,sasDataStepFunction,sasProcStatement
 
 " Procedures, SAS/GRAPH, 9.4
