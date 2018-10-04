@@ -175,6 +175,14 @@ snippet proc
 	proc ${1} data = ${2:&final}${3};${4}
 snippet table
 	table ${1} / nocol norow nopct missing;${2}
+snippet import
+	proc import
+		datafile = "${1:infile}"
+		dbms = xlsx
+		out = ${2:outdata}
+		replace;
+		getnames = yes;
+	run;${3}
 snippet iml
 	proc iml;
 		use ${1:dataset};
