@@ -134,7 +134,7 @@ set cpo&vim
 let b:did_indent = 1
 
 if !exists("g:tex_indent_items")
-    let g:tex_indent_items = 1
+    let g:tex_indent_items = 0
 endif
 if !exists("g:tex_indent_brace")
     let g:tex_indent_brace = 1
