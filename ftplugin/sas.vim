@@ -14,10 +14,10 @@ set cpo&vim
 
 " Local settings
 setlocal softtabstop=2 shiftwidth=2 expandtab
-setlocal textwidth=80 formatoptions=croq
+setlocal formatoptions=croq
 setlocal comments=sr:/*,mb:/*,ex:*/ commentstring=/*%s*/
 setlocal omnifunc=sascomplete#Complete
-setlocal makeprg=sas\ -memsize\ 56g\ -noverbose\ -sysin\ '%:p'
+setlocal makeprg=sas\ -threads\ -cpucount\ actual\ -memsize\ 56g\ -sortsize\ 56g\ -noverbose\ -sysin\ '%:p'
 
 " Find autoexec files from $PATH
 for syspath in split(expand('$PATH'), has('win32') ? ';' : ':')
