@@ -15,7 +15,7 @@ elseif has('gui_win32')
   if version > 704
     set renderoptions=type:directx,level:0.75,gamma:1.25,contrast:0.25,geom:1,renmode:5,taamode:1
   endif
-  set linespace=2
+  set linespace=4
 endif
 
 augroup UserInterface
