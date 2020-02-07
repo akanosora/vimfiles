@@ -17,7 +17,7 @@
 "
 " 2017 Feb 9
 "
-" Add syntax folding 
+" Add syntax folding
 "
 " 2016 Oct 10
 "
@@ -179,7 +179,7 @@ syn keyword sasProcSQLStatementNextKeyword index table view contained
 syn match sasProcSQLStatement '\v%(^|;)\s*\zs\h\w*>' display contained contains=sasProcSQLStatementKeyword,sasGlobalStatementKeyword
 syn match sasProcSQLStatement '\v%(^|;)\s*\zs%(alter|create|describe|drop)>' display contained contains=sasProcSQLStatementComplexKeyword nextgroup=sasProcSQLStatementNextKeyword skipwhite skipnl skipempty
 syn match sasProcSQLStatement '\v%(^|;)\s*\zsvalidate>' display contained contains=sasProcSQLStatementKeyword nextgroup=sasProcSQLStatementKeyword,sasProcSQLStatementComplexKeyword skipwhite skipnl skipempty
-syn match sasProcSQLStatement '\v%(^|;)\s*\zsods>' display contained contains=sasGlobalStatementKeyword nextgroup=sasGlobalStatementODSKeyword skipwhite skipnl skipempty 
+syn match sasProcSQLStatement '\v%(^|;)\s*\zsods>' display contained contains=sasGlobalStatementKeyword nextgroup=sasGlobalStatementODSKeyword skipwhite skipnl skipempty
 syn region sasProcSQL matchgroup=sasSectionKeyword start='\v%(^|;)\s*\zsproc\s+sql>' end='\v%(^|;)\s*%(quit|data|proc|endsas)>'me=s-1 fold contains=@sasBasicSyntax,sasProcSQLFunction,sasProcSQLClause,sasProcSQLStatement
 
 " SAS/DS2, 9.4
