@@ -188,6 +188,10 @@ snippet iml
 		use ${1:dataset};
 		read all var {${2:variables}};${3}
 	quit;
+snippet print
+	proc print data = ${1:dataset} noobs;
+		where ${2:conditions};
+		var ${3:variables};${4}
 snippet create
 	create ${1:dataset} var {${2:variables}};
 	append;
