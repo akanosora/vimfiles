@@ -1,13 +1,17 @@
 snippet pre
-	options nodate nonotes pagesize = max dkricond = warn
-	fmtsearch = (self, export, allo, ted);
+	options nodate dkricond = warn fmtsearch = (self, export, allo, ted);
 
-	%include macro(std style yeartxgp ct_chronicle
+	%include macro(std style yeartxgp
 	racegp2 sorror dnrinfo discore cytoinfo treatpr condint gvhdgp
-	relapse acgvhd recovery report appendix lifetest-new
-	lifetestplot-new check dictmcr selection);
+	relapse acgvhd recovery report appendix	lifetest-new lifetestplot-new
+	check dictmcr selection);
+snippet prect
+	options nodate dkricond = warn fmtsearch = (self, export, ct, ted);
 
-	options notes mprint symbolgen;
+	%include macro(std style ct_chronicle
+	ct_init ct_type ct_dis ct_prdtype ct_ae ct_efficacy
+	report appendix lifetest-new lifetestplot-new
+	ct_check dictmcr selection);
 snippet tedconsent
 	if consenrs < 0 and sgirbres >= 0 then consenrs = sgirbres;
 	if yeartx <= 2007 and consenrs = 0 then delete;
@@ -127,7 +131,7 @@ snippet lifetest
 	%lifetest(indata = $1, strata = $2, event = trm, competerisk = rel, intv = intxrel, timelist = 12 36 60);
 	%lifetest(indata = $1, strata = $2, event = dfs, intv = intxrel, timelist = 12 36 60);
 	%lifetest(indata = $1, strata = $2, event = dead, timelist = 12 36 60);
-	%lifetestexport(rtftitle = ${3:"Table 2: Univariate analysis"});${4}
+	%lifetestexport(title = ${3:"Table 2: Univariate analysis"});${4}
 # Keywords
 snippet co
 	/* ${1} */${2}
@@ -210,3 +214,5 @@ snippet endods Excel
 	ods tagsets.excelxp close;
 snippet endods Graphics
 	ods graphics off;
+snippet isblank
+	%sysevalf(%superq(${1:param}) ${2}= , boolean)${3}
