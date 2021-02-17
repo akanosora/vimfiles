@@ -190,6 +190,7 @@ let g:lightline#bufferline#unnamed = '[No Name]'
 
 " Configure vim-mucomplete
 let g:mucomplete#enable_auto_at_startup = 1
+let g:mucomplete#minimum_prefix_length = 3
 
 " Configure ctrlp
 if has('unix')
