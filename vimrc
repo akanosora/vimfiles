@@ -29,6 +29,7 @@ endif
 " User Interface {{{
 set number foldcolumn=3 foldlevelstart=3 ruler laststatus=2
 set showtabline=2 noshowmode showcmd wildmenu
+set completeopt+=menuone,noinsert shortmess+=c
 
 " Backspace
 set backspace=indent,eol,start whichwrap+=<,>,[,]
@@ -186,6 +187,9 @@ let g:lightline = {
       \ }
 
 let g:lightline#bufferline#unnamed = '[No Name]'
+
+" Configure vim-mucomplete
+let g:mucomplete#enable_auto_at_startup = 1
 
 " Configure ctrlp
 if has('unix')
