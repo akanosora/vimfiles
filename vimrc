@@ -74,12 +74,14 @@ nnoremap <leader>ss :source $MYVIMRC<CR>
 nnoremap <leader>ww :update<CR>
 nnoremap <leader>wq :wq<CR>
 nnoremap <leader>qq :q<CR>
+nnoremap <leader>hs :split<CR>
+nnoremap <leader>vs :vsplit<CR>
 nnoremap <leader>tn :tabnew<CR>
 nnoremap <leader>to :tabonly<CR>
 nnoremap <leader>tc :tabclose<CR>
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
 nnoremap <leader>fi mzgg=G`z
-nnoremap <leader>sc :setlocal spell!<CR>
+nnoremap <leader>sp :setlocal spell!<CR>
 xnoremap <leader>uc Ugv
 xnoremap <leader>lc ugv
 xnoremap <leader>tc ~gv
@@ -149,12 +151,6 @@ let g:netrw_browse_split = 4 " Open in prior window
 let g:netrw_altv = 1         " Open splits to the right
 let g:netrw_liststyle = 3    " Tree view
 
-" Configure vim-airline
-let g:airline#extensions#wordcount#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_left_sep = ' >>> '
-let g:airline_right_sep = ' <<< '
-
 " Configure vim-lightline
 let g:lightline = {
       \ 'colorscheme': 'afterglow',
@@ -202,25 +198,6 @@ let g:ctrlp_root_markers = ['vimrc']
 
 " Configure delimitMate
 let g:delimitMate_expand_cr = 0
-
-" Configure taglist
-let g:tlist_auto_highlight_tag = 1
-let g:tlist_auto_update = 1
-let g:tlist_show_menu = 1
-
-" Configure dbext
-let g:dbext_default_profile_rdb = 'type=ORA:user=zhu:passwd=kenny#418hu:srvname=IBMTPRD'
-let g:dbext_default_profile = 'rdb'
-if has('unix')
-  let g:dbext_default_history_file = $HOME . '/.dbext_hist'
-elseif has('win32')
-  let g:dbext_default_history_file = $HOME . '/_dbext_hist'
-endif
-
-" Configure sqlplus
-let g:sqlplus_userid = 'zhu'
-let g:sqlplus_passwd = 'kenny#418hu'
-let g:sqlplus_db = 'IBMTPRD'
 " }}}
 
 " vim:foldmethod=marker:foldlevel=0
