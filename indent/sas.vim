@@ -1,8 +1,8 @@
 " Vim indent file
 " Language:    SAS
 " Maintainer:  Zhen-Huan Hu <wildkeny@gmail.com>
-" Version:     3.0.6
-" Last Change: 2018-07-30
+" Version:     3.0.7
+" Last Change: 2021-02-18
 
 if exists("b:did_indent")
   finish
@@ -32,29 +32,35 @@ let s:section_str = '\v%(^|;)\s*%(data|proc)>'
 " Regex that captures the start of a data/proc section that supports run-processing
 let s:section_rpp_str = '\v%(^|;)\s*proc\s+%(' . join(s:run_processing_procs, '|') . ')>'
 " Regex that captures the end of a data/proc section
-let s:section_run = '\v%(^|;)\s*run\s*;'
+let s:section_run = '\v%(^|;)\s*run>'
 " Regex that captures the end of a data/proc section that supports run-processing
-let s:section_end = '\v%(^|;)\s*%(quit|enddata)\s*;'
+let s:section_end = '\v%(^|;)\s*%(quit|enddata)>'
 
 " Regex that captures the start of a control block within data section
-let s:block_str = '\v<%(do>%([^;]+<%(to|over|until|while)>[^;]+)=|select%(\s+\([^;]+\))=)\s*;'
+let s:block_str = '\v\%@<!<%(do>%([^;]+<%(to|over|until|while)>[^;]+)=|select%(\s+\([^;]+\))=)\s*;'
+" Regex that captures the end of a control block within data section
+let s:block_end = '\v\%@<!<end\s*;'
 " Regex that captures the start of a control block within proc section
-let s:block_proc_str = '\v%(^|;)\s*%(begingraph|compute|layout|method)>'
-" Regex that captures the end of a control block
-let s:block_end = '\v<%(end|endcomp|endlayout|endgraph)\s*;'
+let s:proc_block_str = '\v%(^|;)\s*%(begingraph|compute|layout)>'
+" Regex that captures the end of a control block within proc section
+let s:proc_block_end = '\v%(^|;)\s*%(endgraph|endcomp|endlayout)>'
 
 " Regex that captures the start of a submit block
 let s:submit_str = '\v%(^|;)\s*submit>'
 " Regex that captures the end of a submit block
-let s:submit_end = '\v%(^|;)\s*endsubmit\s*;'
+let s:submit_end = '\v%(^|;)\s*endsubmit>'
 
 " Regex that captures the start of a macro definition
-let s:macro_str = '\v%(^|;)\s*\%macro>'
+let s:macro_str = '\v\%macro>'
 " Regex that captures the end of a macro definition
-let s:macro_end = '\v%(^|;)\s*\%mend\s*;'
+let s:macro_end = '\v\%mend>'
+" Regex that captures the start of a macro control block
+let s:macro_block_str = '\v\%do>'
+" Regex that captures the end of a macro control block
+let s:macro_block_end = '\v\%end>'
 
 " Regex that defines the end of the program
-let s:program_end = '\v%(^|;)\s*endsas\s*;'
+let s:program_end = '\v%(^|;)\s*endsas>'
 
 " Find the line number of previous keyword defined by the regex
 function! s:PrevMatch(lnum, regex)
@@ -79,23 +85,24 @@ function! GetSASIndent()
     return indent(1)
   else
     let prev_line = getline(prev_lnum)
-    " Previous non-blank line contains the start of a macro/section/block
-    " while not the end of a macro/section/block (at the same line)
+    " Previous non-blank line contains the start of a macro/section/control block
+    " while not the end of a macro/section/control block (at the same line)
     if (prev_line =~? s:section_str && prev_line !~? s:section_run && prev_line !~? s:section_end) ||
           \ (prev_line =~? s:block_str && prev_line !~? s:block_end) ||
-          \ (prev_line =~? s:block_proc_str && prev_line !~? s:block_end) ||
+          \ (prev_line =~? s:proc_block_str && prev_line !~? s:proc_block_end) ||
           \ (prev_line =~? s:submit_str && prev_line !~? s:submit_end) ||
-          \ (prev_line =~? s:macro_str && prev_line !~? s:macro_end)
+          \ (prev_line =~? s:macro_str && prev_line !~? s:macro_end) ||
+          \ (prev_line =~? s:macro_block_str && prev_line !~? s:macro_block_end)
       let ind = indent(prev_lnum) + shiftwidth()
     elseif prev_line =~? s:section_run && prev_line !~? s:section_end
       let prev_section_str_lnum = s:PrevMatch(v:lnum, s:section_str)
       let prev_section_end_lnum = max([
-            \ s:PrevMatch(v:lnum, s:section_end),
-            \ s:PrevMatch(v:lnum, s:submit_str ),
-            \ s:PrevMatch(v:lnum, s:submit_end ),
-            \ s:PrevMatch(v:lnum, s:macro_str  ),
-            \ s:PrevMatch(v:lnum, s:macro_end  ),
-            \ s:PrevMatch(v:lnum, s:program_end)])
+            \ s:PrevMatch(v:lnum, s:section_end    ),
+            \ s:PrevMatch(v:lnum, s:submit_str     ),
+            \ s:PrevMatch(v:lnum, s:submit_end     ),
+            \ s:PrevMatch(v:lnum, s:macro_str      ),
+            \ s:PrevMatch(v:lnum, s:macro_end      ),
+            \ s:PrevMatch(v:lnum, s:program_end    )])
       " Check if the previous section supports run-processing
       if prev_section_end_lnum < prev_section_str_lnum &&
             \ getline(prev_section_str_lnum) =~? s:section_rpp_str
@@ -141,12 +148,12 @@ function! GetSASIndent()
     " since the end of the previous section could be inexplicit
     let prev_section_str_lnum = s:PrevMatch(v:lnum, s:section_str)
     let prev_section_end_lnum = max([
-          \ s:PrevMatch(v:lnum, s:section_end),
-          \ s:PrevMatch(v:lnum, s:submit_str ),
-          \ s:PrevMatch(v:lnum, s:submit_end ),
-          \ s:PrevMatch(v:lnum, s:macro_str  ),
-          \ s:PrevMatch(v:lnum, s:macro_end  ),
-          \ s:PrevMatch(v:lnum, s:program_end)])
+          \ s:PrevMatch(v:lnum, s:section_end    ),
+          \ s:PrevMatch(v:lnum, s:submit_str     ),
+          \ s:PrevMatch(v:lnum, s:submit_end     ),
+          \ s:PrevMatch(v:lnum, s:macro_str      ),
+          \ s:PrevMatch(v:lnum, s:macro_end      ),
+          \ s:PrevMatch(v:lnum, s:program_end    )])
     if prev_section_end_lnum < prev_section_str_lnum
       return indent(prev_section_str_lnum)
     endif
@@ -154,9 +161,11 @@ function! GetSASIndent()
     " Current line is the end of a submit block
     " Match the indentation of the start of the submit block
     return indent(s:PrevMatch(v:lnum, s:submit_str))
-  elseif curr_line =~? s:block_end && curr_line !~? s:block_str && curr_line !~? s:block_proc_str
-    " Re-adjust if current line is the end of a block
-    " while not the beginning of a block (at the same line)
+  elseif (curr_line =~? s:block_end && curr_line !~? s:block_str) ||
+        \ (curr_line =~? s:proc_block_end && curr_line !~? s:proc_block_str) ||
+        \ (curr_line =~? s:macro_block_end && curr_line !~? s:macro_block_str)
+    " Re-adjust if current line is the end of a control block
+    " while not the beginning of a control block (at the same time)
     " Returning the indent of previous block start directly
     " would not work due to nesting
     let ind = ind - shiftwidth()
